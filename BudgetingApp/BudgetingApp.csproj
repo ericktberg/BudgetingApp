@@ -63,36 +63,12 @@
     </ApplicationDefinition>
     <Compile Include="MVVM\SwitchConverter.cs" />
     <Compile Include="MVVM\SwitchConverterCase.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="ViewModel\Create\CreateExpenseViewModel.cs" />
-    <Compile Include="ViewModel\Create\CreateIncomeViewModel.cs" />
-    <Compile Include="ViewModel\Create\CreateTransactionViewModel.cs" />
-    <Compile Include="ViewModel\Create\CreateTransferViewModel.cs" />
-    <Compile Include="ViewModel\DashboardViewModel.cs" />
-    <Compile Include="ViewModel\ExpenseViewModel.cs" />
-    <Compile Include="ViewModel\IncomeViewModel.cs" />
-    <Compile Include="ViewModel\TransactionViewModel.cs" />
-    <Compile Include="ViewModel\TransferViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\ExpenseCreatorControl.xaml.cs">
-      <DependentUpon>ExpenseCreatorControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="MVVM\RelayCommand.cs" />
+    <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="View\ExpenseCreatorControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -136,6 +112,10 @@
     <Resource Include="Images\Monthly.png" />
     <Resource Include="Images\Self-Care.png" />
     <Resource Include="Images\Things.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
