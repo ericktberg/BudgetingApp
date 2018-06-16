@@ -1,0 +1,13 @@
+
+*.ide-wal
+*.ide-shm
+*.ide
+*.lock
+.vs/BudgetingApp/v15/.suo
+BudgetingApp/obj
+BudgetingApp/bin
+Transactions/obj
+Transactions/bin
+TransactionsTests/obj
+TransactionsTests/bin
+packages/
