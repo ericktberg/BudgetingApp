@@ -8,7 +8,7 @@ namespace Transactions.Accounts
 {
     public class DebtAccount : Account
     {
-        public DebtAccount(string name) : base(name)
+        public DebtAccount(string name) : base(name, AccountType.Debt)
         {
         }
 

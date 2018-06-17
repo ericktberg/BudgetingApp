@@ -11,6 +11,16 @@ namespace Transactions
     {
         DateTime Date { get; }
 
+        IList<Statement> Statements
+        {
+            get;
+        }
+
+        IList<Transaction> TransactionCollection
+        {
+            get;
+        }
+
         /// <summary>
         /// Add a transaction to the day's list of transactions
         /// </summary>

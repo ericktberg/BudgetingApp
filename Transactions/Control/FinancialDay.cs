@@ -13,7 +13,7 @@ namespace Transactions
     }
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class FinancialDay : IManageDailyTransactions
+    public class FinancialDay
     {
         public FinancialDay(DateTime day)
         {
@@ -22,6 +22,10 @@ namespace Transactions
             TransactionCollection = new List<Transaction>();
             Statements = new List<Statement>();
         }
+
+        public event EventHandler StatementsChanged;
+
+        public event EventHandler TransactionsChanged;
 
         [JsonProperty]
         public DateTime Date { get; private set; }
@@ -35,11 +39,13 @@ namespace Transactions
         public void AddStatement(Statement statement)
         {
             Statements.Add(statement);
+            OnStatementsChanged();
         }
 
         public void AddTransaction(Transaction transaction)
         {
             TransactionCollection.Add(transaction);
+            OnTransactionsChanged();
         }
 
         public Statement GetStatementForAccount(Account account)
@@ -52,14 +58,34 @@ namespace Transactions
             return TransactionCollection.Where(t => (t.AccountDepositedTo?.Equals(account) ?? false) || (t.AccountWithdrawnFrom?.Equals(account) ?? false));
         }
 
+        private void OnTransactionsChanged()
+        {
+            TransactionsChanged?.Invoke(this, new EventArgs());
+        }
+
+        private void OnStatementsChanged()
+        {
+            StatementsChanged?.Invoke(this, new EventArgs());
+        }
+
         public bool RemoveStatement(Statement statement)
         {
-            return Statements.Remove(statement);
+            if (Statements.Remove(statement))
+            {
+                OnStatementsChanged();
+                return true;
+            }
+            else { return false; }
         }
 
         public bool RemoveTransaction(Transaction transaction)
         {
-            return TransactionCollection.Remove(transaction);
+            if (TransactionCollection.Remove(transaction))
+            {
+                OnTransactionsChanged();
+                return true;
+            }
+            else { return false; }
         }
     }
 }

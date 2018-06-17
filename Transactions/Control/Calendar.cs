@@ -7,15 +7,16 @@ using Transactions.Accounts;
 namespace Transactions
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class Calendar : IManageDays
+    public class Calendar
     {
-        public IEnumerable<IManageDailyTransactions> Days => DayCollection;
+        public IEnumerable<FinancialDay> Days => DayCollection;
 
         [JsonProperty]
-        private IList<IManageDailyTransactions> DayCollection { get; } = new List<IManageDailyTransactions>();
+        private IList<FinancialDay> DayCollection { get; } = new List<FinancialDay>();
 
+        public event EventHandler DayCollectionChanged;
 
-        public IManageDailyTransactions GetDayForDate(DateTime date)
+        public FinancialDay GetDayForDate(DateTime date)
         {
             lock (DayCollection)
             {
@@ -30,15 +31,20 @@ namespace Transactions
                     else if (day.Date > date)
                     {
                         DayCollection.Insert(i, new FinancialDay(date));
+                        OnDayCollectionChanged();
                         return DayCollection[i];
                     }
                 }
             }
 
             DayCollection.Add(new FinancialDay(date));
+            OnDayCollectionChanged();
             return DayCollection.Last();
         }
 
-
+        private void OnDayCollectionChanged()
+        {
+            DayCollectionChanged?.Invoke(this, new EventArgs());
+        }
     }
 }

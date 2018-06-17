@@ -1,16 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 
 namespace Transactions.Accounts
 {
+    public enum AccountType
+    {
+        Liquid,
+        Invested,
+        Debt,
+        Property,
+    }
+
     public class Account
     {
-        public Account(string name)
+        public Account(string name) : this(name, AccountType.Liquid)
         {
-            Name = name;
         }
 
+        [JsonConstructor]
+        public Account(string name, AccountType type)
+        {
+            Name = name;
+            Type = type;
+        }
+
+        [JsonProperty]
         public string Name { get; private set; }
+
+        [JsonProperty]
+        public AccountType Type { get; private set; }
 
         public override bool Equals(object obj)
         {

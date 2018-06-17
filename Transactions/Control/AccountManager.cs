@@ -28,18 +28,19 @@ namespace Transactions
         public decimal GetBalanceFromDate(Account account, DateTime date)
         {
             decimal calculatedBalance = 0;
-
-            foreach (IManageDailyTransactions day in Calendar.Days)
+            
+            foreach (FinancialDay day in Calendar.Days)
             {
                 if (day.Date < date)
                 {
                     Statement possibleStatement = day.GetStatementForAccount(account);
-
+                    
                     if (possibleStatement != null)
                     {
                         calculatedBalance = possibleStatement.Balance;
                     }
-                    else
+
+                    if (possibleStatement == null || possibleStatement.AddWhen == AddWhen.BeginningOfDay)
                     {
                         IEnumerable<Transaction> transactions = day.GetTransactionsForAccount(account);
 

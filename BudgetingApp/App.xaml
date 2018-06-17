@@ -1,10 +1,13 @@
-﻿<Application
+<Application
     x:Class="BudgetingApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:BudgetingApp"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    StartupUri="MainWindow.xaml">
+    d1p1:Ignorable="d"
+    StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <BitmapImage x:Key="LivingExpense" UriSource="Images/LivingExpense.png" />
@@ -13,9 +16,6 @@
         <BitmapImage x:Key="Monthly" UriSource="Images/Monthly.png" />
         <BitmapImage x:Key="SelfCare" UriSource="Images/Self-Care.png" />
         <BitmapImage x:Key="Things" UriSource="Images/Things.png" />
-
-
-
         <DropShadowEffect
             x:Key="DropShadow.Hard"
             BlurRadius="5"
@@ -26,28 +26,20 @@
             BlurRadius="10"
             Opacity=".3"
             ShadowDepth="0" />
-
         <Color x:Key="Primary.Translucent">#33f9ff51</Color>
         <Color x:Key="Secondary.Translucent">#33ff51ab</Color>
         <Color x:Key="Primary">#ff51ab</Color>
-
         <SolidColorBrush x:Key="Brushes.Primary" Color="{StaticResource Primary}" />
         <SolidColorBrush x:Key="Brushes.Primary.Dark">#aa2c6d</SolidColorBrush>
-
         <SolidColorBrush x:Key="Brushes.Light">#f9ff51</SolidColorBrush>
-
         <SolidColorBrush x:Key="Brushes.Primary.Translucent" Color="{StaticResource Primary.Translucent}" />
         <SolidColorBrush x:Key="Brushes.Secondary.Translucent" Color="{StaticResource Secondary.Translucent}" />
-
-
         <SolidColorBrush x:Key="Neutral.Dark">#333</SolidColorBrush>
         <SolidColorBrush x:Key="Neutral.Medium">#555</SolidColorBrush>
         <SolidColorBrush x:Key="Neutral.MediumLight">#bbb</SolidColorBrush>
-
         <system:Double x:Key="FontSize.Medium">16</system:Double>
         <system:Double x:Key="FontSize.Large">20</system:Double>
         <system:Double x:Key="FontSize.VeryLarge">32</system:Double>
-
         <Style x:Key="Card" TargetType="Border">
             <Setter Property="Margin" Value="15" />
             <Setter Property="Padding" Value="15" />
@@ -57,7 +49,6 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Effect" Value="{StaticResource DropShadow.Medium}" />
         </Style>
-
         <Style x:Key="Button.Background" TargetType="Button">
             <Setter Property="Padding" Value="5" />
             <Setter Property="Background" Value="{StaticResource Brushes.Primary}" />
@@ -88,14 +79,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style
             x:Key="Button.Background.White"
             BasedOn="{StaticResource Button.Background}"
             TargetType="Button">
             <Setter Property="Background" Value="White" />
         </Style>
-
         <Style x:Key="Button.Foreground" TargetType="Button">
             <Setter Property="Padding" Value="5" />
             <Setter Property="Border.CornerRadius" Value="4" />
@@ -126,7 +115,5 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
     </Application.Resources>
 </Application>

@@ -40,7 +40,7 @@ namespace TransactionsTests
             [TestMethod]
             public void Should_Save_And_Load_Days_Date()
             {
-                IManageDailyTransactions day = Personal.Calendar.GetDayForDate(new DateTime(2001, 2, 3));
+                FinancialDay day = Personal.Calendar.GetDayForDate(new DateTime(2001, 2, 3));
 
                 string json = Personal.ToJson();
                 AccountManager duplicate = AccountManager.FromJson(json);
@@ -270,6 +270,33 @@ namespace TransactionsTests
 
                 Assert.AreEqual(-400, Personal.GetBalanceFromToday(Account));
                 Assert.AreEqual(400, Personal.GetBalanceFromToday(transferAccount));
+            }
+
+            [TestMethod]
+            public void Should_Add_Transactions_To_Statement_When_BeginningOfDay()
+            {
+                Personal.AddStatement(new Statement(1000, Account) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
+                Personal.AddTransaction(new Income(400, Account), new DateTime(2000, 1, 1));
+
+                Assert.AreEqual(1400, Personal.GetBalanceFromToday(Account));
+            }
+
+            [TestMethod]
+            public void Should_Overwrite_Transactions_With_Statement_When_EndOfDay()
+            {
+                Personal.AddStatement(new Statement(1000, Account) { AddWhen = AddWhen.EndOfDay }, new DateTime(2000, 1, 1));
+                Personal.AddTransaction(new Income(400, Account), new DateTime(2000, 1, 1));
+
+                Assert.AreEqual(1000, Personal.GetBalanceFromToday(Account));
+            }
+
+            [TestMethod]
+            public void Should_Use_Future_Statements_When_No_Previous_Exist()
+            {
+                Personal.AddStatement(new Statement(1000, Account), new DateTime(2000, 1, 1));
+                Personal.AddTransaction(new Expense(400, Account), new DateTime(1999, 1, 1));
+
+                Assert.AreEqual(1400, Personal.GetBalanceFromDate(Account, new DateTime(1999, 6, 1)));
             }
         }
 

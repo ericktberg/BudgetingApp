@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Transactions.Accounts
 {
+    public enum AddWhen
+    {
+        BeginningOfDay,
+        EndOfDay,
+    }
+
     public class Statement
     {
         [JsonProperty]
@@ -16,10 +22,14 @@ namespace Transactions.Accounts
         [JsonProperty]
         public Account Account { get; set; }
 
-        public Statement(decimal balance, Account account)
+        [JsonProperty]
+        public AddWhen AddWhen { get; set; }
+
+        public Statement(decimal balance, Account account, AddWhen addWhen = AddWhen.BeginningOfDay)
         {
             Balance = balance;
             Account = account;
+            AddWhen = addWhen;
         }
     }
 }
