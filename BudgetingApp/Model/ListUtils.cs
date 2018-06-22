@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,11 @@ namespace BudgetingApp.Model
 
                 index++;
             }
+        }
+
+        public static ObservableCollection<T1> WrapEnumerable<T1, T2>(IEnumerable<T2> toMatch, Func<T2, T1> convertToAdd)
+        {
+            return new ObservableCollection<T1>(toMatch.Select(t => convertToAdd(t)));
         }
 
     }

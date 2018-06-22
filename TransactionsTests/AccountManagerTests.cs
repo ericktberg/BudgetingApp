@@ -294,9 +294,18 @@ namespace TransactionsTests
             public void Should_Use_Future_Statements_When_No_Previous_Exist()
             {
                 Personal.AddStatement(new Statement(1000, Account), new DateTime(2000, 1, 1));
-                Personal.AddTransaction(new Expense(400, Account), new DateTime(1999, 1, 1));
+                Personal.AddTransaction(new Expense(400, Account), new DateTime(1999, 6, 1));
 
-                Assert.AreEqual(1400, Personal.GetBalanceFromDate(Account, new DateTime(1999, 6, 1)));
+                Assert.AreEqual(1400, Personal.GetBalanceFromDate(Account, new DateTime(1999, 1, 1)));
+            }
+
+            [TestMethod]
+            public void Should_Overwrite_Transactions_With_Statement_When_Beginning_Of_Day_And_Extrapolating_Backwards()
+            {
+                Personal.AddStatement(new Statement(1000, Account) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
+                Personal.AddTransaction(new Expense(400, Account), new DateTime(2000, 1, 1));
+
+                Assert.AreEqual(1000, Personal.GetBalanceFromDate(Account, new DateTime(1999, 1, 1)));
             }
         }
 

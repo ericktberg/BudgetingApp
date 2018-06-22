@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Transactions.Accounts;
 
@@ -27,32 +28,48 @@ namespace Transactions
 
         public decimal GetBalanceFromDate(Account account, DateTime date)
         {
-            decimal calculatedBalance = 0;
-            
-            foreach (FinancialDay day in Calendar.Days)
+            FinancialDay day = LatestDayWithStatement(date, account);
+            Statement statement;
+            if (day == null)
             {
-                if (day.Date < date)
+                day = FirstDayWithStatement(date, account);
+
+                if (day == null)
                 {
-                    Statement possibleStatement = day.GetStatementForAccount(account);
-                    
-                    if (possibleStatement != null)
-                    {
-                        calculatedBalance = possibleStatement.Balance;
-                    }
-
-                    if (possibleStatement == null || possibleStatement.AddWhen == AddWhen.BeginningOfDay)
-                    {
-                        IEnumerable<Transaction> transactions = day.GetTransactionsForAccount(account);
-
-                        foreach (Transaction transaction in transactions)
-                        {
-                            calculatedBalance += transaction.GetValue(account);
-                        }
-                    }
+                    return SumTransactionInRange(new DateTime(), date, account);
+                }
+                else
+                {
+                    statement = day.GetStatementForAccount(account);
+                    return statement.Balance - SumTransactionInRange(date, day.Date - AddDay(statement, AddWhen.BeginningOfDay), account);
                 }
             }
+            else
+            {
+                statement = day.GetStatementForAccount(account);
+                
+                return statement.Balance + SumTransactionInRange(day.Date + AddDay(statement, AddWhen.EndOfDay), date, account);
+            }
+        }
 
-            return calculatedBalance;
+        private TimeSpan AddDay(Statement statement, AddWhen when)
+        {
+            return statement.AddWhen == when ? TimeSpan.FromDays(1) : TimeSpan.FromDays(0);
+        }
+
+        private FinancialDay FirstDayWithStatement(DateTime startDate, Account account)
+        {
+            return Calendar.Days.Where(d => startDate <= d.Date).FirstOrDefault(d => d.GetStatementForAccount(account) != null);
+        }
+
+        private FinancialDay LatestDayWithStatement(DateTime endDate, Account account)
+        {
+            return Calendar.Days.Where(d => d.Date <= endDate).LastOrDefault(d => d.GetStatementForAccount(account) != null);
+        }
+
+        private decimal SumTransactionInRange(DateTime startDate, DateTime endDate, Account account)
+        {
+            return Calendar.Days.Where(d => startDate <= d.Date && d.Date <= endDate).Sum(d => d.GetTransactionsForAccount(account).Sum(a => a.GetValue(account)));
         }
 
         public void AddStatement(Statement statement, DateTime date)

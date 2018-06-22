@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using BudgetingApp.Model.FileManager;
 using BudgetingApp.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -9,56 +8,13 @@ using Transactions.Accounts;
 
 namespace BudgetingAppTests
 {
-    public class MockFileManager : IManageFiles
-    {
-        public string DefaultFileName => "Default";
-
-        public string DefaultFileLocation => "Default";
-
-        public string DefaultFilePath => "Default";
-
-        public AccountManager GetAccountManagerFromPath(string filePath)
-        {
-            return new AccountManager();
-        }
-
-        public bool IsSaved { get; set; }
-
-        public bool SaveAccountManagerToPath(string filePath, AccountManager account)
-        {
-            IsSaved = true;
-            return true;
-        }
-    }
-
     [TestClass]
-    public partial class AccountManagerViewModelTests
+    public class ManageTransactionsViewModelTests
     {
-        public static MockFileManager Files { get; } = new MockFileManager();
-
-        public AccountManagerViewModel ViewModel { get; } = new AccountManagerViewModel(Files);
+        ManageTransactionsViewModel ViewModel { get; set; } = new ManageTransactionsViewModel(new AccountManager());
 
         [TestClass]
-        public class Constructor : AccountManagerViewModelTests
-        {
-            [TestMethod]
-            public void Should_Never_Have_Null_Manager_On_Load()
-            {
-                Assert.IsNotNull(ViewModel.AccountManager);
-            }
-
-            [TestMethod]
-            public void Should_Save_Manager_On_Shutdown()
-            {
-                ViewModel.OnShutdown();
-
-                Assert.IsTrue(Files.IsSaved);
-                // FileManager.Verify(_ => _.SaveAccountManagerToPath(It.IsAny<string>(), It.IsNotNull<AccountManager>()), Times.Once);
-            }
-        }
-
-        [TestClass]
-        public class TransactionTypeTests : AccountManagerViewModelTests
+        public class TransactionTypeTests : ManageTransactionsViewModelTests
         {
             [TestMethod]
             public void Should_Change_TransactionViewModel_With_TransactionType()
@@ -101,7 +57,59 @@ namespace BudgetingAppTests
         }
 
         [TestClass]
-        public class AddAccount : AccountManagerViewModelTests
+        public class DaysCollection : ManageTransactionsViewModelTests
+        {
+            [TestMethod]
+            public void Should_Have_No_Stateless_Days_On_Init()
+            {
+                var manager = new AccountManager()
+                {
+                    Accounts = { new Account("TestAccount") }
+                };
+
+                manager.Calendar.GetDayForDate(new DateTime(2000, 1, 1));
+
+                ViewModel = new ManageTransactionsViewModel(manager);
+
+                Assert.AreEqual(1, ViewModel.AccountManager.Calendar.Days.Count());
+                Assert.AreEqual(0, ViewModel.Days.Count());
+            }
+
+            [TestMethod]
+            public void Should_Have_Days_With_Statements_On_Init()
+            {
+                var manager = new AccountManager()
+                {
+                    Accounts = { new Account("TestAccount") }
+                };
+
+                manager.AddTransaction(new Income(1000, new Account("TestAccount")), new DateTime(2000, 1, 1));
+
+                ViewModel = new ManageTransactionsViewModel(manager);
+
+                Assert.AreEqual(1, ViewModel.AccountManager.Calendar.Days.Count());
+                Assert.AreEqual(1, ViewModel.Days.Count());
+            }
+
+            [TestMethod]
+            public void Should_Ignore_Days_Without_Statements_In_Them_When_Updating()
+            {
+                ViewModel.AccountManager.Calendar.GetDayForDate(new DateTime(2000, 1, 1));
+                ViewModel.AddTransaction(new Income(1000, new Account("TestAccount")), new DateTime(2001, 2, 3));
+                
+                Assert.AreEqual(2, ViewModel.AccountManager.Calendar.Days.Count());
+                Assert.AreEqual(1, ViewModel.Days.Count());
+            }
+        }
+    }
+
+    [TestClass]
+    public class ManageAccountsViewModelTests
+    {
+        ManageAccountsViewModel ViewModel { get; } = new ManageAccountsViewModel(new AccountManager());
+
+        [TestClass]
+        public class AddAccount : ManageAccountsViewModelTests
         {
             [TestMethod]
             public void Should_Keep_Lists_Synchronized()
@@ -118,9 +126,15 @@ namespace BudgetingAppTests
                 Assert.AreEqual(afterCount, ViewModel.Accounts.Count);
             }
         }
+    }
 
+    [TestClass]
+    public class ManageStatementsViewModelTests
+    {
+        ManageStatementsViewModel ViewModel { get; set; } = new ManageStatementsViewModel(new AccountManager() { Accounts = { new Account("TestAccount") } });
+        
         [TestClass]
-        public class AddStatement : AccountManagerViewModelTests
+        public class AddStatement : ManageStatementsViewModelTests
         {
             [TestMethod]
             public void Should_Keep_Days_Synchronized_When_Adding_Statement()
@@ -129,12 +143,86 @@ namespace BudgetingAppTests
                 Assert.AreEqual(0, ViewModel.Days.Count);
                 var account = new Account("TestAccount");
 
-                ViewModel.AddAccount(account);
-
                 ViewModel.AddStatement(new Statement(1000, account), new DateTime(2000, 1, 1));
 
                 Assert.AreEqual(1, ViewModel.AccountManager.Calendar.Days.Count());
                 Assert.AreEqual(1, ViewModel.Days.Count);
+            }
+
+        }
+
+        [TestClass]
+        public class DaysCollection : ManageStatementsViewModelTests
+        {
+            [TestMethod]
+            public void Should_Have_No_Stateless_Days_On_Init()
+            {
+                var manager = new AccountManager()
+                {
+                    Accounts = { new Account("TestAccount") }
+                };
+
+                manager.Calendar.GetDayForDate(new DateTime(2000, 1, 1));
+
+                ViewModel = new ManageStatementsViewModel(manager);
+                
+                Assert.AreEqual(1, ViewModel.AccountManager.Calendar.Days.Count());
+                Assert.AreEqual(0, ViewModel.Days.Count());
+            }
+
+            [TestMethod]
+            public void Should_Have_Days_With_Statements_On_Init()
+            {
+                var manager = new AccountManager()
+                {
+                    Accounts = { new Account("TestAccount") }
+                };
+
+                manager.AddStatement(new Statement(1000, new Account("TestAccount")), new DateTime(2000, 1, 1));
+
+                ViewModel = new ManageStatementsViewModel(manager);
+
+                Assert.AreEqual(1, ViewModel.AccountManager.Calendar.Days.Count());
+                Assert.AreEqual(1, ViewModel.Days.Count());
+            }
+
+            [TestMethod]
+            public void Should_Ignore_Days_Without_Statements_In_Them_When_Updating()
+            {
+                ViewModel.AccountManager.Calendar.GetDayForDate(new DateTime(2000, 1, 1));
+                ViewModel.AddStatement(new Statement(1000, new Account("TestAccount")), new DateTime(2001, 2, 3));
+
+                Assert.AreEqual(2, ViewModel.AccountManager.Calendar.Days.Count());
+                Assert.AreEqual(1, ViewModel.Days.Count());
+            }
+        }
+    }
+
+
+
+    [TestClass]
+    public class AccountManagerViewModelTests
+    {
+        public static MockFileManager Files { get; } = new MockFileManager();
+
+        public AccountManagerViewModel ViewModel { get; } = new AccountManagerViewModel(Files);
+
+        [TestClass]
+        public class Constructor : AccountManagerViewModelTests
+        {
+            [TestMethod]
+            public void Should_Never_Have_Null_Manager_On_Load()
+            {
+                Assert.IsNotNull(ViewModel.AccountManager);
+            }
+
+            [TestMethod]
+            public void Should_Save_Manager_On_Shutdown()
+            {
+                ViewModel.OnShutdown();
+
+                Assert.IsTrue(Files.IsSaved);
+                // FileManager.Verify(_ => _.SaveAccountManagerToPath(It.IsAny<string>(), It.IsNotNull<AccountManager>()), Times.Once);
             }
         }
     }

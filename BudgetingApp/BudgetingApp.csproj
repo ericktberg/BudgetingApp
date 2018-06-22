@@ -92,14 +92,19 @@
     </Compile>
     <Compile Include="ViewModel\AccountManagerViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
+    <Compile Include="ViewModel\ManageStatements\IAddStatements.cs" />
+    <Compile Include="ViewModel\ManageTransactions\IAddTransactions.cs" />
     <Compile Include="ViewModel\ManageAccounts\AddAccountsViewModel.cs" />
+    <Compile Include="ViewModel\ManageAccounts\ManageAccountsViewModel.cs" />
     <Compile Include="ViewModel\ManageStatements\AddStatementsViewModel.cs" />
     <Compile Include="ViewModel\ManageAccounts\IAddAccounts.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ManageStatements\ManageStatementsViewModel.cs" />
     <Compile Include="ViewModel\ManageTransactions\AddExpenseViewModel.cs" />
     <Compile Include="ViewModel\ManageTransactions\AddIncomeViewModel.cs" />
     <Compile Include="ViewModel\ManageTransactions\AddTransactionViewModel.cs" />
     <Compile Include="ViewModel\ManageTransactions\AddTransferViewModel.cs" />
+    <Compile Include="ViewModel\ManageTransactions\ManageTransactionsViewModel.cs" />
     <Compile Include="View\HomeScreen.xaml.cs">
       <DependentUpon>HomeScreen.xaml</DependentUpon>
     </Compile>

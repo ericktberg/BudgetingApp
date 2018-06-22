@@ -66,6 +66,7 @@
     <Compile Include="AddStatementsViewModelTests.cs" />
     <Compile Include="AddTransactionViewModelTests.cs" />
     <Compile Include="ListUtilTests.cs" />
+    <Compile Include="MockFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
