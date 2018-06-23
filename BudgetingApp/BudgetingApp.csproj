@@ -105,11 +105,17 @@
     <Compile Include="ViewModel\ManageTransactions\AddTransactionViewModel.cs" />
     <Compile Include="ViewModel\ManageTransactions\AddTransferViewModel.cs" />
     <Compile Include="ViewModel\ManageTransactions\ManageTransactionsViewModel.cs" />
+    <Compile Include="View\AccountSelectionView.xaml.cs">
+      <DependentUpon>AccountSelectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HomeScreen.xaml.cs">
       <DependentUpon>HomeScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TransactionList.xaml.cs">
+      <DependentUpon>TransactionList.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +146,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Icons\Icons.csproj">
+      <Project>{2a6372ac-992a-4ac8-af12-8303e71013a9}</Project>
+      <Name>Icons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Transactions\Transactions.csproj">
       <Project>{120DD9D2-8326-416F-AA31-FBA02D747AAA}</Project>
       <Name>Transactions</Name>
@@ -157,11 +167,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="View\AccountSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\HomeScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TransactionList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

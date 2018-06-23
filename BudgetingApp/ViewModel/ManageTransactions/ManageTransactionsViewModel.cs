@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Transactions;
+using Transactions.Accounts;
 
 namespace BudgetingApp.ViewModel
 {
@@ -21,12 +22,20 @@ namespace BudgetingApp.ViewModel
 
         private TransactionType _selectedType;
 
+        public ManageTransactionsViewModel() 
+            : this(new AccountManager()
+            {
+                Accounts = { new Account("Checking", AccountType.Liquid) }
+            })
+        {
+        }
+
         public ManageTransactionsViewModel(AccountManager manager)
         {
             AccountManager = manager;
 
             TransactionType = TransactionType.Income;
-            TransactionTypes = EnumsUtil.ToList<TransactionType>();
+            TransactionTypes = EnumUtils.ToList<TransactionType>();
             Days = ListUtils.WrapEnumerable(DaysWithTransactions, day => new DayWrapper(day));
         }
 

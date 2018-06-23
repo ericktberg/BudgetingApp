@@ -9,6 +9,9 @@
     d1p1:Ignorable="d"
     StartupUri="View/MainWindow.xaml">
     <Application.Resources>
+        <BitmapImage x:Key="Checkmark" UriSource="pack://application:,,,/Icons;component/64px/Checkmark.png" />
+
+
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <BitmapImage x:Key="LivingExpense" UriSource="Images/LivingExpense.png" />
         <BitmapImage x:Key="ExerciseExpense" UriSource="Images/Exercise.png" />
@@ -26,9 +29,10 @@
             BlurRadius="10"
             Opacity=".3"
             ShadowDepth="0" />
-        <Color x:Key="Primary.Translucent">#33f9ff51</Color>
-        <Color x:Key="Secondary.Translucent">#33ff51ab</Color>
-        <Color x:Key="Primary">#ff51ab</Color>
+        <Color x:Key="Primary">#fffb3d</Color>
+        <Color x:Key="Primary.Translucent">#77fffb3d</Color>
+        <Color x:Key="Secondary">#ff38a8</Color>
+        <Color x:Key="Secondary.Translucent">#77ff38a8</Color>
         <SolidColorBrush x:Key="Brushes.Primary" Color="{StaticResource Primary}" />
         <SolidColorBrush x:Key="Brushes.Primary.Dark">#aa2c6d</SolidColorBrush>
         <SolidColorBrush x:Key="Brushes.Light">#f9ff51</SolidColorBrush>

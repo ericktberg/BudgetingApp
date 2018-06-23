@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetingApp.MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,10 @@ using Transactions.Accounts;
 
 namespace BudgetingApp.ViewModel
 {
-    public class AccountViewModel
+    public class AccountViewModel : ViewModelBase
     {
+        private bool _isSelected;
+
         public AccountViewModel(Account account, AccountManager manager)
         {
             Account = account;
@@ -23,6 +26,16 @@ namespace BudgetingApp.ViewModel
         public string Name => Account.Name;
 
         public AccountType Type => Account.Type;
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
 
         public decimal CurrentBalance => Manager.GetBalanceFromToday(Account);
     }

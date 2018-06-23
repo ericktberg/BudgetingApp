@@ -1,4 +1,5 @@
 ﻿using System;
+using Transactions;
 using Transactions.Accounts;
 
 namespace BudgetingApp.ViewModel

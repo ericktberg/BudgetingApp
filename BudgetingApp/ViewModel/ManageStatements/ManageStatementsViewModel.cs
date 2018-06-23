@@ -18,7 +18,8 @@ namespace BudgetingApp.ViewModel
             AddStatementsObject = new AddStatementsViewModel(this, AccountManager.Accounts);
 
             Days = ListUtils.WrapEnumerable(DaysWithStatements, day => new DayWrapper(day));
-        }
+        } 
+
         public AccountManager AccountManager { get; }
 
         public AddStatementsViewModel AddStatementsObject { get; }
@@ -30,7 +31,7 @@ namespace BudgetingApp.ViewModel
             AccountManager.AddStatement(statement, date);
             MatchDays();
         }
-
+        
         private IEnumerable<FinancialDay> DaysWithStatements => AccountManager.Calendar.Days.Where(d => d.Statements.Count > 0).Reverse();
 
         private void MatchDays()

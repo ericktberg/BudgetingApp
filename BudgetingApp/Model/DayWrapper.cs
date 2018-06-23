@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Transactions;
 using Transactions.Accounts;
 
@@ -21,7 +22,14 @@ namespace BudgetingApp.Model
 
             Day.StatementsChanged += Day_StatementsChanged;
             Day.TransactionsChanged += Day_TransactionsChanged;
+
+            RemoveStatementCommand = new RelayCommand<Statement>(RemoveStatement);
+            RemoveTransactionCommand = new RelayCommand<Transaction>(RemoveTransaction);
         }
+
+        public ICommand RemoveStatementCommand { get; }
+
+        public ICommand RemoveTransactionCommand { get; }
 
         public DateTime Date => Day.Date;
 
@@ -30,6 +38,16 @@ namespace BudgetingApp.Model
         public ObservableCollection<Statement> Statements { get; }
 
         public ObservableCollection<Transaction> Transactions { get; }
+
+        public void RemoveStatement(Statement statement)
+        {
+            Day.RemoveStatement(statement);
+        }
+
+        public void RemoveTransaction(Transaction transaction)
+        {
+            Day.RemoveTransaction(transaction);
+        }
 
         private void Day_StatementsChanged(object sender, EventArgs e)
         {

@@ -8,9 +8,11 @@
     xmlns:local="clr-namespace:BudgetingApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:BudgetingApp.ViewModel"
-    Title="MainWindow"
+    Title="Sunsets"
     d:DataContext="{d:DesignInstance viewmodel:AccountManagerViewModel,
                                      IsDesignTimeCreatable=True}"
+    Background="#3C001E"
+    WindowState="Maximized"
     mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
@@ -20,181 +22,24 @@
     <Window.DataContext>
         <viewmodel:AccountManagerViewModel />
     </Window.DataContext>
-    <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Padding" Value="15,5" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="10" />
-        </Style>
-    </Window.Resources>
-    <DockPanel LastChildFill="False">
-        <Border DataContext="{Binding Accounts}" DockPanel.Dock="Left">
-            <StackPanel>
-                <Border Padding="10" DataContext="{Binding AddAccountsObject}">
-                    <StackPanel>
-                        <TextBox Padding="5" Text="{Binding AccountName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ComboBox
-                            Margin="0,10"
-                            ItemsSource="{Binding AccountTypes}"
-                            SelectedItem="{Binding Type, Mode=TwoWay}" />
-                        <Button Command="{Binding AddCommand}" Content="Add Account" />
-                    </StackPanel>
-                </Border>
-                <ItemsControl Margin="10" ItemsSource="{Binding Accounts}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" />
-                                <TextBlock Margin="10,0" Text="{Binding Type}" />
-                                <TextBlock Text="{Binding CurrentBalance, StringFormat='{}{0:C2}'}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+    <Grid>
+        <Border>
+            <Border.OpacityMask>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#dfff" />
+                    <GradientStop Offset="1" Color="#2fff" />
+                </LinearGradientBrush>
+            </Border.OpacityMask>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="1" Color="{StaticResource Primary}" />
+                    <GradientStop Offset="0" Color="{StaticResource Secondary}" />
+                </LinearGradientBrush>
+            </Border.Background>
         </Border>
-        <Border DataContext="{Binding Statements}" DockPanel.Dock="Left">
-            <DockPanel>
-                <Border
-                    Padding="10"
-                    DataContext="{Binding AddStatementsObject}"
-                    DockPanel.Dock="Top">
-                    <StackPanel>
-                        <DatePicker
-                            Margin="10,0"
-                            Padding="5"
-                            SelectedDate="{Binding Date, Mode=TwoWay}" />
-                        <TextBox
-                            Margin="10"
-                            Padding="5"
-                            Text="{Binding Balance, Mode=TwoWay, StringFormat={}{0:C2}}" />
-                        <ComboBox
-                            Margin="10,0"
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding Accounts}"
-                            SelectedItem="{Binding AddToAccount, Mode=TwoWay}" />
-                        <Button Command="{Binding AddCommand}" Content="Add Statement" />
-                    </StackPanel>
-                </Border>
-                <Border Padding="10">
-                    <ScrollViewer>
-                        <ItemsControl ItemsSource="{Binding Days}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border
-                                        Margin="0,0,0,10"
-                                        Padding="5"
-                                        BorderBrush="{StaticResource Brushes.Primary}"
-                                        BorderThickness="2,0,0,0">
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Date.Date}" />
-                                            <ItemsControl Margin="10,5,0,5" ItemsSource="{Binding Statements}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding Balance}" />
-                                                            <TextBlock Margin="10,0" Text="{Binding Account.Name}" />
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </StackPanel>
-                                    </Border>
-
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Border>
-            </DockPanel>
+        <Border Padding="15" HorizontalAlignment="Left">
+            <local:AccountSelectionView DataContext="{Binding Accounts}" />
         </Border>
-        <Border DataContext="{Binding Transactions}" DockPanel.Dock="Left">
-            <DockPanel>
-                <StackPanel DockPanel.Dock="Top">
-                    <ComboBox
-                        Margin="10"
-                        ItemsSource="{Binding TransactionTypes}"
-                        SelectedItem="{Binding TransactionType, Mode=TwoWay}" />
-                    <Border Padding="10" DataContext="{Binding AddTransactionsObject}">
-                        <StackPanel>
-                            <DatePicker
-                                Margin="10,0"
-                                Padding="5"
-                                SelectedDate="{Binding Date, Mode=TwoWay}" />
-                            <TextBox
-                                Margin="10"
-                                Padding="5"
-                                Text="{Binding Amount, Mode=TwoWay, StringFormat={}{0:C2}}" />
-                            <ContentControl Content="{Binding}">
-                                <ContentControl.Resources>
-                                    <DataTemplate DataType="{x:Type viewmodel:AddIncomeViewModel}">
-                                        <ComboBox
-                                            Margin="10,0"
-                                            DisplayMemberPath="Name"
-                                            ItemsSource="{Binding Accounts}"
-                                            SelectedItem="{Binding DepositAccount, Mode=TwoWay}" />
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type viewmodel:AddExpenseViewModel}">
-                                        <ComboBox
-                                            Margin="10,0"
-                                            DisplayMemberPath="Name"
-                                            ItemsSource="{Binding Accounts}"
-                                            SelectedItem="{Binding WithdrawAccount, Mode=TwoWay}" />
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type viewmodel:AddTransferViewModel}">
-                                        <StackPanel>
-                                            <ComboBox
-                                                Margin="10,0"
-                                                DisplayMemberPath="Name"
-                                                ItemsSource="{Binding Accounts}"
-                                                SelectedItem="{Binding DepositAccount, Mode=TwoWay}" />
-                                            <ComboBox
-                                                Margin="10,0"
-                                                DisplayMemberPath="Name"
-                                                ItemsSource="{Binding Accounts}"
-                                                SelectedItem="{Binding WithdrawAccount, Mode=TwoWay}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ContentControl.Resources>
-                            </ContentControl>
-                            <Button Command="{Binding AddCommand}" Content="Add Transaction" />
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-                <Border Padding="10">
-                    <ScrollViewer>
-                        <ItemsControl ItemsSource="{Binding Days}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border
-                                        Margin="0,0,0,10"
-                                        Padding="5"
-                                        BorderBrush="{StaticResource Brushes.Primary}"
-                                        BorderThickness="2,0,0,0">
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Date.Date}" />
+    </Grid>
 
-                                            <ItemsControl ItemsSource="{Binding Transactions}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Margin="5" Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding Amount}" />
-                                                            <TextBlock Margin="10,0" Text="{Binding AccountDepositedTo.Name}" />
-                                                            <TextBlock Text="{Binding AccountWithdrawnFrom.Name}" />
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </StackPanel>
-                                    </Border>
-
-
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Border>
-            </DockPanel>
-        </Border>
-    </DockPanel>
 </Window>

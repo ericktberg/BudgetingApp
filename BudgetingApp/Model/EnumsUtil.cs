@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BudgetingApp.Model
 {
-    public static class EnumsUtil
+    public static class EnumUtils
     {
         /// <summary>
         /// Convert an Enumerated type into an enumerable of all its values
