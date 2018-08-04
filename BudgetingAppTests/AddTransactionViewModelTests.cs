@@ -79,7 +79,7 @@ namespace BudgetingAppTests
                     DepositAccount = new Account("Second"),
                 };
 
-                Assert.IsInstanceOfType(ViewModel.Create(), typeof(Transfer));
+                Assert.IsInstanceOfType(ViewModel.Create(), typeof(TransferTo));
             }
         }
     }

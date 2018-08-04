@@ -14,10 +14,9 @@ namespace BudgetingApp.ViewModel
         private Account _addToAccount;
         private DateTime _date;
 
-        public AddStatementsViewModel(IAddStatements addStatementTo, IEnumerable<Account> accounts)
+        public AddStatementsViewModel(IAddStatements addStatementTo)
         {
             AddStatementTo = addStatementTo;
-            Accounts = accounts;
             Date = DateTime.Now;
 
             AddCommand = new RelayCommand(obj => AddStatement(), obj => DateValid && AccountValid);
@@ -80,7 +79,7 @@ namespace BudgetingApp.ViewModel
             if (!DateValid) throw new ArgumentException(nameof(Date));
             if (!AccountValid) throw new ArgumentException(nameof(AddToAccount));
 
-            return new Statement(Balance, AddToAccount);
+            return new Statement(Balance);
         }
     }
 }

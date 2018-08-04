@@ -17,18 +17,13 @@ namespace Transactions.Accounts
     {
         [JsonProperty]
         public decimal Balance { get; set; }
-
-
-        [JsonProperty]
-        public Account Account { get; set; }
-
+       
         [JsonProperty]
         public AddWhen AddWhen { get; set; }
 
-        public Statement(decimal balance, Account account, AddWhen addWhen = AddWhen.BeginningOfDay)
+        public Statement(decimal balance, AddWhen addWhen = AddWhen.BeginningOfDay)
         {
             Balance = balance;
-            Account = account;
             AddWhen = addWhen;
         }
     }

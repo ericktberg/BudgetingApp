@@ -16,30 +16,38 @@ namespace BudgetingApp.ViewModel
         Transfer,
     }
 
-    public class ManageTransactionsViewModel : ViewModelBase, IAddTransactions
+    public class ManageTransactionsViewModel : ViewModelBase
     {
         private AddTransactionViewModel _addTransactions;
 
         private TransactionType _selectedType;
 
-        public ManageTransactionsViewModel() 
-            : this(new AccountManager()
-            {
-                Accounts = { new Account("Checking", AccountType.Liquid) }
-            })
+
+
+        public ManageTransactionsViewModel()
         {
+            TransactionType = TransactionType.Income;
+            TransactionTypes = EnumUtils.ToList<TransactionType>();
+            Days = ListUtils.WrapEnumerable(DaysWithTransactions, day => new DayWrapper(day));
+
+            Account = new Account("Account", AccountType.Liquid);
+            Account.Deposit(new Income(500), new DateTime(2000, 1, 1));
+            Account.Deposit(new Income(500), new DateTime(2000, 1, 1));
+            Account.Deposit(new Income(500), new DateTime(2000, 1, 1));
+            Account.Deposit(new Income(500), new DateTime(2000, 1, 1));
+            Account.Deposit(new Income(500), new DateTime(2000, 1, 1));
         }
 
-        public ManageTransactionsViewModel(AccountManager manager)
+        public ManageTransactionsViewModel(Account account)
         {
-            AccountManager = manager;
+            Account = account;
 
             TransactionType = TransactionType.Income;
             TransactionTypes = EnumUtils.ToList<TransactionType>();
             Days = ListUtils.WrapEnumerable(DaysWithTransactions, day => new DayWrapper(day));
         }
 
-        public AccountManager AccountManager { get; set; }
+        public Account Account { get; set; }
 
         public AddTransactionViewModel AddTransactionsObject
         {
@@ -62,16 +70,11 @@ namespace BudgetingApp.ViewModel
                 GetModelTypeFromEnum(value);
             }
         }
+
         public ObservableCollection<DayWrapper> Days { get; }
 
         public IList<TransactionType> TransactionTypes { get; }
-
-        public void AddTransaction(Transaction transaction, DateTime date)
-        {
-            AccountManager.AddTransaction(transaction, date);
-            MatchDays();
-        }
-
+        
         public void GetModelTypeFromEnum(TransactionType type)
         {
             if (AddTransactionsObject == null)
@@ -79,15 +82,15 @@ namespace BudgetingApp.ViewModel
                 switch (type)
                 {
                     case TransactionType.Income:
-                        AddTransactionsObject = new AddIncomeViewModel(this, AccountManager.Accounts);
+                        AddTransactionsObject = new AddIncomeViewModel(Account);
                         return;
 
                     case TransactionType.Expense:
-                        AddTransactionsObject = new AddExpenseViewModel(this, AccountManager.Accounts);
+                        AddTransactionsObject = new AddExpenseViewModel(Account);
                         return;
 
                     case TransactionType.Transfer:
-                        AddTransactionsObject = new AddTransferViewModel(this, AccountManager.Accounts);
+                        AddTransactionsObject = new AddTransferViewModel(Account, Accounts);
                         return;
                 }
             }
@@ -112,7 +115,7 @@ namespace BudgetingApp.ViewModel
                     case TransactionType.Transfer:
                         if (!(AddTransactionsObject is AddTransferViewModel))
                         {
-                            AddTransactionsObject = new AddTransferViewModel(AddTransactionsObject);
+                            AddTransactionsObject = new AddTransferViewModel(AddTransactionsObject, Accounts);
                         }
                         return;
                 }
@@ -120,7 +123,7 @@ namespace BudgetingApp.ViewModel
         }
 
 
-        private IEnumerable<FinancialDay> DaysWithTransactions => AccountManager.Calendar.Days.Where(d => d.TransactionCollection.Count > 0).Reverse();
+        private IEnumerable<FinancialDay> DaysWithTransactions => Account.Calendar.Days.Where(d => d.TransactionCollection.Count > 0).Reverse();
 
         private void MatchDays()
         {

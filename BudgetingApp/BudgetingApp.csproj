@@ -53,6 +53,7 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -77,6 +78,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MVVM\BangConverter.cs" />
+    <Compile Include="ViewModel\AccountManagerViewModel.cs" />
+    <Compile Include="ViewModel\ManageTransactions\TransactionsViewModel.cs" />
+    <Compile Include="View\Animations\BackgroundAnimation.cs" />
     <Compile Include="Model\DayWrapper.cs" />
     <Compile Include="Model\EnumsUtil.cs" />
     <Compile Include="Model\FileManager\FileManager.cs" />
@@ -90,23 +95,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\AccountManagerViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
-    <Compile Include="ViewModel\ManageStatements\IAddStatements.cs" />
-    <Compile Include="ViewModel\ManageTransactions\IAddTransactions.cs" />
-    <Compile Include="ViewModel\ManageAccounts\AddAccountsViewModel.cs" />
-    <Compile Include="ViewModel\ManageAccounts\ManageAccountsViewModel.cs" />
-    <Compile Include="ViewModel\ManageStatements\AddStatementsViewModel.cs" />
-    <Compile Include="ViewModel\ManageAccounts\IAddAccounts.cs" />
+    <Compile Include="ViewModel\AppControllerViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ManageStatements\ManageStatementsViewModel.cs" />
-    <Compile Include="ViewModel\ManageTransactions\AddExpenseViewModel.cs" />
-    <Compile Include="ViewModel\ManageTransactions\AddIncomeViewModel.cs" />
-    <Compile Include="ViewModel\ManageTransactions\AddTransactionViewModel.cs" />
-    <Compile Include="ViewModel\ManageTransactions\AddTransferViewModel.cs" />
-    <Compile Include="ViewModel\ManageTransactions\ManageTransactionsViewModel.cs" />
+    <Compile Include="View\AccountManagementView.xaml.cs">
+      <DependentUpon>AccountManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AccountSelectionView.xaml.cs">
       <DependentUpon>AccountSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditAccountView.xaml.cs">
+      <DependentUpon>EditAccountView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HomeScreen.xaml.cs">
       <DependentUpon>HomeScreen.xaml</DependentUpon>
@@ -165,9 +164,20 @@
     <Resource Include="Images\Self-Care.png" />
     <Resource Include="Images\Things.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="ViewModel\ManageAccounts\" />
+    <Folder Include="ViewModel\ManageStatements\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\AccountManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AccountSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditAccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,11 +8,92 @@
     xmlns:viewmodel="clr-namespace:BudgetingApp.ViewModel"
     d:DataContext="{d:DesignInstance viewmodel:ManageTransactionsViewModel,
                                      IsDesignTimeCreatable=True}"
+    d:DesignHeight="150"
     mc:Ignorable="d">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
             <Setter Property="Background" Value="Black" />
         </Style>
     </d:DesignerProperties.DesignStyle>
-    <Border BorderBrush="White" BorderThickness="1,0" />
+    <Grid>
+        <Border BorderBrush="White" BorderThickness="1,0" />
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer.Template>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <ScrollContentPresenter />
+
+                        <ScrollBar
+                            Name="PART_VerticalScrollBar"
+                            Grid.Column="1"
+                            Maximum="{TemplateBinding ScrollableHeight}"
+                            ViewportSize="{TemplateBinding ViewportHeight}"
+                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                            Value="{TemplateBinding VerticalOffset}" />
+                        <ScrollBar
+                            Name="PART_HorizontalScrollBar"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Maximum="{TemplateBinding ScrollableWidth}"
+                            Orientation="Horizontal"
+                            ViewportSize="{TemplateBinding ViewportWidth}"
+                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                            Value="{TemplateBinding HorizontalOffset}" />
+                    </Grid>
+                </ControlTemplate>
+            </ScrollViewer.Template>
+            <ItemsControl
+                Width="200"
+                Margin="0,50,0,0"
+                Grid.IsSharedSizeScope="True"
+                ItemsSource="{Binding Days}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="0,10,0,5"
+                            BorderBrush="{StaticResource Brushes.Secondary.Dark}"
+                            BorderThickness="2,0,0,2">
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="5,3,5,3"
+                                    Foreground="{StaticResource Brushes.Secondary.Dark}"
+                                    Text="{Binding Date, StringFormat='{}{0:MMMM d, yyyy : dddd}'}" />
+                                <ItemsControl ItemsSource="{Binding Transactions}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border
+                                                Margin="0,1,0,0"
+                                                Padding="10"
+                                                Background="#8fff">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="Amount" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Right"
+                                                        FontFamily="Courier New"
+                                                        Text="{Binding Amount, StringFormat={}{0:C2}}" />
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </ScrollViewer>
+
+    </Grid>
 </UserControl>

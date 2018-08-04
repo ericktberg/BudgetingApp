@@ -8,46 +8,65 @@ using Transactions.Accounts;
 
 namespace BudgetingApp.ViewModel
 {
+    public enum TransferMode
+    {
+        From,
+        To
+    }
+
     public class AddTransferViewModel : AddTransactionViewModel
     {
-        private Account _depositAccount;
-        private Account _withdrawAccount;
+        private Account _otherAccount;
+        private TransferMode _transferMode;
 
-        public AddTransferViewModel(AddTransactionViewModel copyFrom) : base(copyFrom)
+        public AddTransferViewModel(AddTransactionViewModel copyFrom, IEnumerable<Account> accounts) : base(copyFrom)
         {
+            Accounts = accounts;
         }
 
-        public AddTransferViewModel(IAddTransactions addTo, IEnumerable<Account> accounts) : base(addTo, accounts)
+        public AddTransferViewModel(Account account, IEnumerable<Account> accounts) : base(account)
         {
+            Accounts = accounts;
         }
 
-        public Account WithdrawAccount
+        public IEnumerable<Account> Accounts { get; }
+        
+        public Account OtherAccount
         {
-            get => _withdrawAccount;
+            get => _otherAccount;
             set
             {
-                _withdrawAccount = value;
-                OnPropertyChanged(nameof(WithdrawAccount));
+                _otherAccount = value;
+                OnPropertyChanged(nameof(OtherAccount));
             }
         }
 
-        public Account DepositAccount
+        public TransferMode TransferMode
         {
-            get => _depositAccount;
+            get => _transferMode;
             set
             {
-                _depositAccount = value;
-                OnPropertyChanged(nameof(DepositAccount));
+                _transferMode = value;
+                OnPropertyChanged(nameof(TransferMode));
             }
         }
 
-        public override bool AccountValid => DepositAccount != null && WithdrawAccount != null && !DepositAccount.Equals(WithdrawAccount);
+        public bool AccountValid => OtherAccount != null && !OtherAccount.Equals(Account);
 
-        protected override Transaction InnerCreate()
+        public override void AddTransaction()
         {
-            if (!AccountValid) throw new ArgumentException("Deposit account or Withdraw account invalid");
+            if (!AccountValid) throw new ArgumentException("Other account invalid or the same as current account.");
 
-            return new Transfer(Amount, WithdrawAccount, DepositAccount);
+            switch (TransferMode)
+            {
+                case TransferMode.From:
+                    Account.TransferFrom(new TransferFrom(Amount, OtherAccount), Date);
+                    break;
+
+                case TransferMode.To:
+                    Account.TransferTo(new TransferTo(Amount, OtherAccount), Date);
+                    break;
+            }
         }
     }
 }

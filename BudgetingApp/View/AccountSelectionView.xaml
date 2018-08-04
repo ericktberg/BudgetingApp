@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:BudgetingApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:BudgetingApp.ViewModel"
-    d:DataContext="{d:DesignInstance viewmodel:ManageAccountsViewModel,
+    d:DataContext="{d:DesignInstance viewmodel:AccountManagerViewModel,
                                      IsDesignTimeCreatable=True}"
     mc:Ignorable="d">
     <d:DesignerProperties.DesignStyle>

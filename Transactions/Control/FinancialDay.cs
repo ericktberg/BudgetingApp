@@ -42,20 +42,16 @@ namespace Transactions
             OnStatementsChanged();
         }
 
-        public void AddTransaction(Transaction transaction)
+        public bool AddTransaction(Transaction transaction)
         {
+            if (TransactionCollection.Contains(transaction))
+            {
+                return false;
+            }
+
             TransactionCollection.Add(transaction);
             OnTransactionsChanged();
-        }
-
-        public Statement GetStatementForAccount(Account account)
-        {
-            return Statements.FirstOrDefault(s => s.Account.Equals(account));
-        }
-
-        public IEnumerable<Transaction> GetTransactionsForAccount(Account account)
-        {
-            return TransactionCollection.Where(t => (t.AccountDepositedTo?.Equals(account) ?? false) || (t.AccountWithdrawnFrom?.Equals(account) ?? false));
+            return true;
         }
 
         private void OnTransactionsChanged()

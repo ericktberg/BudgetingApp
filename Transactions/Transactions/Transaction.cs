@@ -8,36 +8,30 @@ namespace Transactions
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class Transaction
     {
-        public Transaction(decimal amount, Account fromAccount, Account toAccount)
+        public Transaction(decimal amount) : this(amount, Guid.NewGuid())
         {
-            AccountWithdrawnFrom = fromAccount;
-            AccountDepositedTo = toAccount;
+        }
+
+        [JsonConstructor]
+        public Transaction(decimal amount, Guid guid)
+        {
             Amount = amount;
+            TransactionGuid = guid;
         }
 
         [JsonProperty]
-        public Account AccountDepositedTo { get; private set; }
-
-        [JsonProperty]
-        public Account AccountWithdrawnFrom { get; private set; }
+        public Guid TransactionGuid { get; }
 
         [JsonProperty]
         public decimal Amount { get; set; }
 
-        public virtual decimal GetValue(Account account)
+        public virtual decimal Value => Amount;
+
+        public override bool Equals(object obj)
         {
-            if (AccountDepositedTo?.Equals(account) ?? false)
-            {
-                return account.GetDepositDelta(Amount);
-            }
-            else if (AccountWithdrawnFrom?.Equals(account) ?? false)
-            {
-                return account.GetWithdrawDelta(Amount);
-            }
-            else
-            {
-                throw new ArgumentException("Irrelevant account encountered", nameof(account));
-            }
+            var transaction = obj as Transaction;
+            return transaction != null &&
+                   TransactionGuid.Equals(transaction.TransactionGuid);
         }
     }
 }

@@ -13,31 +13,17 @@ namespace BudgetingApp.ViewModel
     {
         private Account _withdrawAccount;
 
-        public AddExpenseViewModel(IAddTransactions addTo, IEnumerable<Account> accounts) : base(addTo, accounts)
+        public AddExpenseViewModel(Account account) : base(account)
         {
         }
 
         public AddExpenseViewModel(AddTransactionViewModel copyFrom) : base(copyFrom)
         {
         }
-
-        public Account WithdrawAccount
+        
+        public override void AddTransaction()
         {
-            get => _withdrawAccount;
-            set
-            {
-                _withdrawAccount = value;
-                OnPropertyChanged(nameof(WithdrawAccount));
-            }
-        }
-
-        public override bool AccountValid => WithdrawAccount != null;
-
-        protected override Transaction InnerCreate()
-        {
-            if (!AccountValid) throw new ArgumentException(nameof(WithdrawAccount));
-
-            return new Expense(Amount, WithdrawAccount);
+            Account.Withdraw(new Expense(Amount), Date);
         }
     }
 }

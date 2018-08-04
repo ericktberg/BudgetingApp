@@ -21,7 +21,6 @@ namespace BudgetingApp.ViewModel
         {
             AddAccountTo = addAccountTo;
             Accounts = accounts;
-            AccountTypes = EnumUtils.ToList<AccountType>();
 
             AddCommand = new RelayCommand(obj => AddAccount(), obj => !NameTaken);
         }
@@ -36,7 +35,6 @@ namespace BudgetingApp.ViewModel
 
         public IEnumerable<Account> Accounts { get; }
 
-        public IEnumerable<AccountType> AccountTypes { get; }
 
         public string AccountName
         {

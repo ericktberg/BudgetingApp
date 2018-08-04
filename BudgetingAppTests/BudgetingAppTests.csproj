@@ -65,14 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountManagerViewModelTests.cs" />
-    <Compile Include="AddAccountsViewModelTests.cs" />
-    <Compile Include="AddStatementsViewModelTests.cs" />
-    <Compile Include="AddTransactionViewModelTests.cs" />
     <Compile Include="ListUtilTests.cs" />
-    <Compile Include="ManageAccountsViewModelTests.cs" />
-    <Compile Include="ManageStatementsViewModelTests.cs" />
-    <Compile Include="ManageTransactionsViewModelTests.cs" />
     <Compile Include="MockFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

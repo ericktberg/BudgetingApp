@@ -11,16 +11,16 @@ namespace BudgetingApp.ViewModel
 {
     public class ManageStatementsViewModel : ViewModelBase, IAddStatements
     {
-        public ManageStatementsViewModel(AccountManager manager)
+        public ManageStatementsViewModel(Account account)
         {
-            AccountManager = manager;
+            Account = account;
 
-            AddStatementsObject = new AddStatementsViewModel(this, AccountManager.Accounts);
+            AddStatementsObject = new AddStatementsViewModel(this);
 
             Days = ListUtils.WrapEnumerable(DaysWithStatements, day => new DayWrapper(day));
         } 
 
-        public AccountManager AccountManager { get; }
+        public Account Account { get; }
 
         public AddStatementsViewModel AddStatementsObject { get; }
 
@@ -28,11 +28,11 @@ namespace BudgetingApp.ViewModel
 
         public void AddStatement(Statement statement, DateTime date)
         {
-            AccountManager.AddStatement(statement, date);
+            Account.AddStatement(statement, date);
             MatchDays();
         }
         
-        private IEnumerable<FinancialDay> DaysWithStatements => AccountManager.Calendar.Days.Where(d => d.Statements.Count > 0).Reverse();
+        private IEnumerable<FinancialDay> DaysWithStatements => Account.Calendar.Days.Where(d => d.Statements.Count > 0).Reverse();
 
         private void MatchDays()
         {

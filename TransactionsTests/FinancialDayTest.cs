@@ -11,49 +11,57 @@ namespace TransactionsTests
     {
         public FinancialDay Day { get; } = new FinancialDay(DateTime.Now);
 
-        [TestMethod]
-        public void Should_Initialize_Empty()
-        {
-            Assert.AreEqual(0, Day.TransactionCollection.Count);
-            Assert.AreEqual(0, Day.Statements.Count);
-        }
-
-
         [TestClass]
-        public class GetTransactionsForAccount : FinancialDayTest
+        public class Constructor : FinancialDayTest
         {
             [TestMethod]
-            public void Should_Retrieve_Added_Transaction()
+            public void Should_Initialize_Empty()
             {
-                Account a = new Account("Test");
+                Assert.AreEqual(0, Day.TransactionCollection.Count);
+                Assert.AreEqual(0, Day.Statements.Count);
+            }
+        }
 
-                Day.AddTransaction(new Income(400, a));
+        [TestClass]
+        public class AddTransaction : FinancialDayTest
+        {
+            [TestMethod]
+            public void Should_NotAdd_When_TransactionExists()
+            {
+                Transaction income = new Income(300);
+
+                Day.AddTransaction(income);
+                Day.AddTransaction(income);
 
                 Assert.AreEqual(1, Day.TransactionCollection.Count);
-                Assert.AreEqual(1, Day.GetTransactionsForAccount(a).Count());
-                Assert.AreEqual(400, Day.GetTransactionsForAccount(a).First().Amount);
-            }
-        }
-
-        [TestClass]
-        public class GetStatementForAccount : FinancialDayTest
-        {
-            [TestMethod]
-            public void Should_Return_Null_When_Statement_Missing()
-            {
-                Assert.IsNull(Day.GetStatementForAccount(new Account("Test")));
             }
 
             [TestMethod]
-            public void Should_Return_Statement()
+            public void Should_NotAdd_When_TransactionWithGuidExists()
             {
-                Account a = new Account("Test");
+                Transaction one = new Income(300);
 
-                Day.AddStatement(new Statement(1000, a));
+                Transaction two = new Expense(400, one.TransactionGuid);
 
-                Assert.AreEqual(1, Day.Statements.Count);
-                Assert.IsNotNull(Day.GetStatementForAccount(a));
-                Assert.AreEqual(1000, Day.GetStatementForAccount(a).Balance);
+                Day.AddTransaction(one);
+                Day.AddTransaction(two);
+
+                Assert.AreEqual(1, Day.TransactionCollection.Count);
+            }
+
+            [TestMethod]
+            public void Should_Add_When_AllUniqueTransactions()
+            {
+                Transaction one = new Income(300);
+
+                Transaction two = new Expense(400);
+                Transaction three = new Income(500);
+
+                Day.AddTransaction(one);
+                Day.AddTransaction(two);
+                Day.AddTransaction(three);
+
+                Assert.AreEqual(3, Day.TransactionCollection.Count);
             }
         }
     }

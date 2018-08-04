@@ -12,14 +12,9 @@ namespace Transactions.Accounts
         {
         }
 
-        public override decimal GetDepositDelta(decimal amount)
+        public override decimal GetDelta(decimal amount)
         {
-            return -base.GetDepositDelta(amount);
-        }
-
-        public override decimal GetWithdrawDelta(decimal amount)
-        {
-            return -base.GetWithdrawDelta(amount);
+            return -base.GetDelta(amount);
         }
     }
 }

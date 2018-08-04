@@ -16,16 +16,14 @@ namespace BudgetingApp.ViewModel
         private decimal _amount;
         private DateTime _date;
 
-        public AddTransactionViewModel(IAddTransactions addTo, IEnumerable<Account> accounts)
+        public AddTransactionViewModel(Account account)
         {
-            AddTo = addTo;
-            Accounts = accounts;
             Date = DateTime.Now;
 
-            AddCommand = new RelayCommand(obj => AddTransaction(), obj => DateValid && AccountValid);
+            AddCommand = new RelayCommand(obj => AddTransaction(), obj => DateValid);
         }
 
-        public AddTransactionViewModel(AddTransactionViewModel copyFrom) : this(copyFrom.AddTo, copyFrom.Accounts)
+        public AddTransactionViewModel(AddTransactionViewModel copyFrom) : this(copyFrom.Account)
         {
             Amount = copyFrom.Amount;
             Date = copyFrom.Date;
@@ -37,9 +35,7 @@ namespace BudgetingApp.ViewModel
 
         #endregion
 
-        public IAddTransactions AddTo { get; }
-
-        public IEnumerable<Account> Accounts { get; }
+        public Account Account { get; }
 
         public decimal Amount
         {
@@ -66,21 +62,6 @@ namespace BudgetingApp.ViewModel
             get => Date.Year > 1995;
         }
 
-        public void AddTransaction()
-        {
-            AddTo.AddTransaction(Create(), Date);
-        }
-
-        public abstract bool AccountValid {get;}
-
-
-        public Transaction Create()
-        {
-            if (!DateValid) throw new ArgumentException(nameof(Date));
-
-            return InnerCreate();
-        }
-
-        protected abstract Transaction InnerCreate();
+        public abstract void AddTransaction();
     }
 }

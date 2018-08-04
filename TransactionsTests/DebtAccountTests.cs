@@ -22,13 +22,7 @@ namespace TransactionsTests
             [TestMethod]
             public void Should_Decrease_Balance_From_Deposits()
             {
-                Assert.AreEqual(-400, Account.GetDepositDelta(400));
-            }
-
-            [TestMethod]
-            public void Should_Increase_Balance_From_Withdrawels()
-            {
-                Assert.AreEqual(400, Account.GetWithdrawDelta(400));
+                Assert.AreEqual(-400, Account.GetDelta(400));
             }
         }
     }

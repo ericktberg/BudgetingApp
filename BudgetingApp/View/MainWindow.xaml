@@ -11,7 +11,9 @@
     Title="Sunsets"
     d:DataContext="{d:DesignInstance viewmodel:AccountManagerViewModel,
                                      IsDesignTimeCreatable=True}"
-    Background="#3C001E"
+    Background="White"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True"
     WindowState="Maximized"
     mc:Ignorable="d">
     <i:Interaction.Triggers>
@@ -27,19 +29,56 @@
             <Border.OpacityMask>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Offset="0" Color="#dfff" />
-                    <GradientStop Offset="1" Color="#2fff" />
+                    <GradientStop Offset="1" Color="#4fff" />
                 </LinearGradientBrush>
             </Border.OpacityMask>
             <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Offset="1" Color="{StaticResource Primary}" />
-                    <GradientStop Offset="0" Color="{StaticResource Secondary}" />
-                </LinearGradientBrush>
+                <RadialGradientBrush Center=".7,.5" GradientOrigin="1,0" MappingMode="RelativeToBoundingBox" RadiusX=".7" RadiusY=".7">
+                    <GradientStop Offset="0" Color="{StaticResource Primary}" />
+                    <GradientStop Offset="1" Color="{StaticResource Secondary}" />
+                </RadialGradientBrush>
             </Border.Background>
         </Border>
-        <Border Padding="15" HorizontalAlignment="Left">
-            <local:AccountSelectionView DataContext="{Binding Accounts}" />
-        </Border>
+        <DockPanel>
+            <Border
+                BorderBrush="White"
+                BorderThickness="0,0,0,1"
+                DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        x:Name="BackButton"
+                        Margin="20,5,0,0"
+                        VerticalAlignment="Top"
+                        BorderThickness="0"
+                        Content="abc"
+                        FontSize="{StaticResource FontSize.Large}"
+                        FontWeight="Light"
+                        Style="{StaticResource Button.Foreground}"
+                        Visibility="Collapsed" />
+                    <TextBlock
+                        x:Name="PageTitle"
+                        Margin="20,15,20,10"
+                        FontSize="{StaticResource FontSize.VeryLarge}"
+                        FontWeight="Light"
+                        Text="DASHBOARD" />
+                </StackPanel>
+            </Border>
+            <DockPanel x:Name="Visualisations" LastChildFill="False">
+                <Border
+                    Padding="15"
+                    BorderBrush="WhiteSmoke"
+                    BorderThickness="0,0,1,0"
+                    DockPanel.Dock="Left">
+                    <local:AccountSelectionView />
+                </Border>
+                <Border DockPanel.Dock="Left">
+                    <local:AccountManagementView />
+                </Border>
+            </DockPanel>
+
+
+        </DockPanel>
+
     </Grid>
 
 </Window>

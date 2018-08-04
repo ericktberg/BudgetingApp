@@ -16,27 +16,13 @@ namespace BudgetingApp.ViewModel
         {
         }
 
-        public AddIncomeViewModel(IAddTransactions addTo, IEnumerable<Account> accounts) : base(addTo, accounts)
+        public AddIncomeViewModel(Account account) : base(account)
         {
         }
-
-        public Account DepositAccount
-        {
-            get => _depositAccount;
-            set
-            {
-                _depositAccount = value;
-                OnPropertyChanged(nameof(DepositAccount));
-            }
-        }
-
-        public override bool AccountValid => DepositAccount != null;
         
-        protected override Transaction InnerCreate()
+        public override void AddTransaction()
         {
-            if (!AccountValid) throw new ArgumentException(nameof(DepositAccount));
-
-            return new Income(Amount, DepositAccount);
+            Account.Deposit(new Income(Amount), Date);
         }
     }
 }
