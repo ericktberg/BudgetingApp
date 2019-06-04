@@ -7,23 +7,19 @@ using System.Threading.Tasks;
 using Sunsets.Transactions;
 using Sunsets.Transactions.Accounts;
 
-namespace Sunsets.Sunsets.Transactions.Tests.Unit
+namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
 {
     [TestClass]
-    public class DebtAccountTests
+    public class GetBalanceFromToday
     {
         public static Calendar Calendar { get; } = new Calendar();
 
         public DebtAccount Account { get; set; } = new DebtAccount("Test");
 
-        [TestClass]
-        public class GetBalanceFromToday : DebtAccountTests
+        [TestMethod]
+        public void Should_Decrease_Balance_From_Deposits()
         {
-            [TestMethod]
-            public void Should_Decrease_Balance_From_Deposits()
-            {
-                Assert.AreEqual(-400, Account.GetDelta(400));
-            }
+            Assert.AreEqual(-400, Account.GetDelta(400));
         }
     }
 }

@@ -48,12 +48,18 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountTests.cs" />
-    <Compile Include="CalendarTests.cs" />
-    <Compile Include="DebtAccountTests.cs" />
-    <Compile Include="AccountManagerTests.cs" />
+    <Compile Include="AccountManagerTests\AccountManagerTester.cs" />
+    <Compile Include="AccountManagerTests\ToJson.cs" />
+    <Compile Include="AccountManagerTests\ToJsonFile.cs" />
+    <Compile Include="AccountTests\DebtInteraction.cs" />
+    <Compile Include="AccountTests\GetBalanceFromDate.cs" />
+    <Compile Include="AccountTests\GetBalanceFromToday.cs" />
+    <Compile Include="CalendarTests\GetDayForDate.cs" />
+    <Compile Include="DebtAccountTests\GetBalanceFromToday.cs" />
+    <Compile Include="FinancialDayTests\AddTransaction.cs" />
+    <Compile Include="FinancialDayTests\Constructor.cs" />
+    <Compile Include="FinancialDayTests\FinancialDayTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FinancialDayTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Transactions\Transactions.csproj">

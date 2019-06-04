@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Sunsets.Sunsets.Transactions.Tests.Unit")]
+[assembly: AssemblyTitle("Sunsets.Transactions.Tests.Unit")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Sunsets.Sunsets.Transactions.Tests.Unit")]
+[assembly: AssemblyProduct("Sunsets.Transactions.Tests.Unit")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

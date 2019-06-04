@@ -8,10 +8,6 @@ Sunsets.Application/obj
 Sunsets.Application/bin
 Sunsets.Transactions/obj
 Sunsets.Transactions/bin
-Sunsets.Sunsets.Transactions.Tests.Unit/obj
-Sunsets.Sunsets.Transactions.Tests.Unit/bin
-Sunsets.Application.Tests.Unit/obj
-Sunsets.Application.Tests.Unit/bin
-Icons/bin
-Icons/obj
+obj
+bin
 packages/
