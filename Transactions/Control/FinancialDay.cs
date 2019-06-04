@@ -1,17 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Sunsets.Transactions.Accounts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Transactions
 {
-    [JsonArray]
-    public class StatementDictionary : Dictionary<Account, Statement>
-    {
-
-    }
-
     [JsonObject(MemberSerialization.OptIn)]
     public class FinancialDay
     {
@@ -54,16 +47,6 @@ namespace Sunsets.Transactions
             return true;
         }
 
-        private void OnTransactionsChanged()
-        {
-            TransactionsChanged?.Invoke(this, new EventArgs());
-        }
-
-        private void OnStatementsChanged()
-        {
-            StatementsChanged?.Invoke(this, new EventArgs());
-        }
-
         public bool RemoveStatement(Statement statement)
         {
             if (Statements.Remove(statement))
@@ -83,5 +66,20 @@ namespace Sunsets.Transactions
             }
             else { return false; }
         }
+
+        private void OnStatementsChanged()
+        {
+            StatementsChanged?.Invoke(this, new EventArgs());
+        }
+
+        private void OnTransactionsChanged()
+        {
+            TransactionsChanged?.Invoke(this, new EventArgs());
+        }
+    }
+
+    [JsonArray]
+    public class StatementDictionary : Dictionary<Account, Statement>
+    {
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Configuration;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Transactions
 {
@@ -20,10 +18,10 @@ namespace Sunsets.Transactions
         }
 
         [JsonProperty]
-        public Guid TransactionGuid { get; }
+        public decimal Amount { get; set; }
 
         [JsonProperty]
-        public decimal Amount { get; set; }
+        public Guid TransactionGuid { get; }
 
         public virtual decimal Value => Amount;
 

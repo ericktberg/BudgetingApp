@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Sunsets.Transactions.Accounts;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Transactions
 {
@@ -25,7 +24,7 @@ namespace Sunsets.Transactions
         {
             return account.GetBalanceFromDate(date);
         }
-        
+
         public decimal GetBalanceFromToday(Account account)
         {
             return account.GetBalanceFromToday();
@@ -40,6 +39,18 @@ namespace Sunsets.Transactions
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
         };
+
+        public static AccountManager FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<AccountManager>(jsonString, Settings);
+        }
+
+        public static AccountManager FromJson(Stream stream)
+        {
+            StreamReader reader = new StreamReader(stream);
+            JsonSerializer serializer = JsonSerializer.Create(Settings);
+            return (AccountManager) serializer.Deserialize(reader, typeof(AccountManager));
+        }
 
         public bool ToJson(Stream stream)
         {
@@ -56,18 +67,6 @@ namespace Sunsets.Transactions
             return JsonConvert.SerializeObject(this, Settings);
         }
 
-        public static AccountManager FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<AccountManager>(jsonString, Settings);
-        }
-
-        public static AccountManager FromJson(Stream stream)
-        {
-            StreamReader reader = new StreamReader(stream);
-            JsonSerializer serializer = JsonSerializer.Create(Settings);
-            return (AccountManager) serializer.Deserialize(reader, typeof(AccountManager));
-        }
-
-        #endregion
+        #endregion IO Methods
     }
 }

@@ -30,7 +30,7 @@ namespace Sunsets.Transactions.Tests.Unit.CalendarTests
 
             FinancialDay day2 = Calendar.GetDayForDate(new DateTime(2000, 1, 1));
 
-            Assert.ReferenceEquals(day1, day2);
+            Assert.AreSame(day1, day2);
             Assert.AreEqual(1, Calendar.Days.Count());
         }
 
@@ -41,7 +41,7 @@ namespace Sunsets.Transactions.Tests.Unit.CalendarTests
 
             FinancialDay day2 = Calendar.GetDayForDate(new DateTime(2000, 1, 1, 12, 30, 0));
 
-            Assert.ReferenceEquals(day1, day2);
+            Assert.AreSame(day1, day2);
             Assert.AreEqual(1, Calendar.Days.Count());
         }
     }

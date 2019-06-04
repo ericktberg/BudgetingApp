@@ -2,19 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Transactions
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class Calendar
     {
+        public event EventHandler DayCollectionChanged;
+
         public IEnumerable<FinancialDay> Days => DayCollection;
 
         [JsonProperty]
         private IList<FinancialDay> DayCollection { get; } = new List<FinancialDay>();
-
-        public event EventHandler DayCollectionChanged;
 
         public FinancialDay GetDayForDate(DateTime date)
         {

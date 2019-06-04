@@ -9,7 +9,7 @@ namespace Sunsets.Transactions
 {
     public class TransferTo : Transaction
     {
-        public TransferTo(decimal amount, Account withdrawnFrom) 
+        public TransferTo(decimal amount, Account withdrawnFrom)
             : base(amount)
         {
             AccountWithdrawnFrom = withdrawnFrom;
