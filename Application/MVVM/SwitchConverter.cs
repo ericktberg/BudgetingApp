@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace BudgetingApp.MVVM
+namespace Sunsets.Application.MVVM
 {
     /// <summary>
     /// A converter that accepts <see cref="SwitchConverterCase"/>s and converts them to the 

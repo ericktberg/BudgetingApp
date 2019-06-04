@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetingApp.Model
+namespace Sunsets.Application.Model
 {
     public static class ListUtils
     {

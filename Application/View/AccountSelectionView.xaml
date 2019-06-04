@@ -1,11 +1,11 @@
 ﻿<UserControl
-    x:Class="BudgetingApp.View.AccountSelectionView"
+    x:Class="Sunsets.Application.View.AccountSelectionView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:BudgetingApp.View"
+    xmlns:local="clr-namespace:Sunsets.Application.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodel="clr-namespace:BudgetingApp.ViewModel"
+    xmlns:viewmodel="clr-namespace:Sunsets.Application.ViewModel"
     d:DataContext="{d:DesignInstance viewmodel:AccountManagerViewModel,
                                      IsDesignTimeCreatable=True}"
     mc:Ignorable="d">

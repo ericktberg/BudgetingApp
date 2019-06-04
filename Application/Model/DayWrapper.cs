@@ -1,4 +1,4 @@
-﻿using BudgetingApp.MVVM;
+﻿using Sunsets.Application.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Transactions;
-using Transactions.Accounts;
+using Sunsets.Transactions;
+using Sunsets.Transactions.Accounts;
 
-namespace BudgetingApp.Model
+namespace Sunsets.Application.Model
 {
     public class DayWrapper : ViewModelBase
     {

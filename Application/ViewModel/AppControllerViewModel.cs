@@ -1,11 +1,11 @@
-﻿using BudgetingApp.MVVM;
+﻿using Sunsets.Application.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetingApp.ViewModel
+namespace Sunsets.Application.ViewModel
 {
     public class AppControllerViewModel : ViewModelBase
     {

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
-using Transactions.Accounts;
+using Sunsets.Transactions.Accounts;
 
-namespace Transactions
+namespace Sunsets.Transactions
 {
     public enum IncomeCategory
     {

@@ -74,7 +74,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BudgetingApp\Application.csproj">
+    <ProjectReference Include="..\Application\Application.csproj">
       <Project>{CDA7A681-4000-43F5-A97C-95D425BCC136}</Project>
       <Name>Application</Name>
     </ProjectReference>

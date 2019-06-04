@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace BudgetingApp
+namespace Sunsets.Application
 {
     public class RelayCommand : RelayCommand<object>, ICommand
     {

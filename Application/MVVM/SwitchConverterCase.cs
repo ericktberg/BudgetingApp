@@ -1,6 +1,6 @@
 ﻿using System.Windows.Markup;
 
-namespace BudgetingApp.MVVM
+namespace Sunsets.Application.MVVM
 {
     /// <summary>
     /// Represents a case for a switch converter.

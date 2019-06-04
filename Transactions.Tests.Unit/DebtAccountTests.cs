@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Transactions;
-using Transactions.Accounts;
+using Sunsets.Transactions;
+using Sunsets.Transactions.Accounts;
 
-namespace TransactionsTests
+namespace Sunsets.Sunsets.Transactions.Tests.Unit
 {
     [TestClass]
     public class DebtAccountTests

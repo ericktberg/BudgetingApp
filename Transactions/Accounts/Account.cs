@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Transactions.Accounts
+namespace Sunsets.Transactions.Accounts
 {
     public enum AccountType
     {

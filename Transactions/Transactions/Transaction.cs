@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Configuration;
-using Transactions.Accounts;
+using Sunsets.Transactions.Accounts;
 
-namespace Transactions
+namespace Sunsets.Transactions
 {
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class Transaction

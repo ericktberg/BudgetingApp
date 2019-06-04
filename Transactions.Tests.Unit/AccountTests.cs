@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Transactions;
-using Transactions.Accounts;
+using Sunsets.Transactions;
+using Sunsets.Transactions.Accounts;
 
-namespace TransactionsTests
+namespace Sunsets.Transactions.Tests.Unit
 {
     [TestClass]
     public class AccountTests

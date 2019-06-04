@@ -1,7 +1,7 @@
-﻿using BudgetingApp.Model.FileManager;
-using Transactions;
+﻿using Sunsets.Application.Model.FileManager;
+using Sunsets.Transactions;
 
-namespace BudgetingAppTests
+namespace Sunsets.Application.Tests.Unit
 {
     public class MockFileManager : IManageFiles
     {

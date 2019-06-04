@@ -1,6 +1,6 @@
 using GalaSoft.MvvmLight;
 
-namespace BudgetingApp.ViewModel
+namespace Sunsets.Application.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

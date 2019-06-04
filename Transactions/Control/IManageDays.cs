@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Transactions.Accounts;
+using Sunsets.Transactions.Accounts;
 
-namespace Transactions
+namespace Sunsets.Transactions
 {
     public interface IManageDays
     {
@@ -17,7 +17,7 @@ namespace Transactions
         IManageDailyTransactions GetDayForDate(DateTime date);
 
         /// <summary>
-        /// A collection of all days that have financial transactions in them.
+        /// A collection of all days that have financial Transactions in them.
         /// </summary>
         IEnumerable<IManageDailyTransactions> Days { get; }
     }

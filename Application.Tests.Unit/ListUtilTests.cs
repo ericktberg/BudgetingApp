@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using BudgetingApp.Model;
+using Sunsets.Application.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BudgetingAppTests
+namespace Sunsets.Application.Tests.Unit
 {
     [TestClass]
     public class ListUtilTests

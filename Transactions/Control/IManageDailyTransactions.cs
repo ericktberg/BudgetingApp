@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Transactions.Accounts;
+using Sunsets.Transactions.Accounts;
 
-namespace Transactions
+namespace Sunsets.Transactions
 {
     public interface IManageDailyTransactions
     {
@@ -22,13 +22,13 @@ namespace Transactions
         }
 
         /// <summary>
-        /// Add a transaction to the day's list of transactions
+        /// Add a transaction to the day's list of Transactions
         /// </summary>
         /// <param name="transaction">The transaction to add</param>
         void AddTransaction(Transaction transaction);
 
         /// <summary>
-        /// Remvove a transaction from the day's list of transactions
+        /// Remvove a transaction from the day's list of Transactions
         /// </summary>
         /// <param name="transaction">The transaction to remove</param>
         /// <returns>Returns true if a transaction was removed. False otherwise.</returns>
@@ -48,10 +48,10 @@ namespace Transactions
         bool RemoveStatement(Statement statement);
 
         /// <summary>
-        /// Get a collection of transactions for the account queried
+        /// Get a collection of Transactions for the account queried
         /// </summary>
-        /// <param name="account">The account the transactions apply to</param>
-        /// <returns>An enumeration of transactions. Empty if there are none.</returns>
+        /// <param name="account">The account the Transactions apply to</param>
+        /// <returns>An enumeration of Transactions. Empty if there are none.</returns>
         IEnumerable<Transaction> GetTransactionsForAccount(Account account);
 
         /// <summary>

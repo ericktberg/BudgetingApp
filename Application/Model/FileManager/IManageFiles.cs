@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Transactions;
+using Sunsets.Transactions;
 
-namespace BudgetingApp.Model.FileManager
+namespace Sunsets.Application.Model.FileManager
 {
     public interface IManageFiles
     {

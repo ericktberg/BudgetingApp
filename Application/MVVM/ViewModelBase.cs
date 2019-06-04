@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetingApp.MVVM
+namespace Sunsets.Application.MVVM
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

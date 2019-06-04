@@ -1,12 +1,12 @@
 <Application
-    x:Class="BudgetingApp.App"
+    x:Class="Sunsets.Application.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:animate="clr-namespace:BudgetingApp.Animations"
+    xmlns:animate="clr-namespace:Sunsets.Application.Animations"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:BudgetingApp"
-    xmlns:mvvm="clr-namespace:BudgetingApp.MVVM"
+    xmlns:local="clr-namespace:Sunsets.Application"
+    xmlns:mvvm="clr-namespace:Sunsets.Application.MVVM"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     d1p1:Ignorable="d"
     StartupUri="View/MainWindow.xaml">

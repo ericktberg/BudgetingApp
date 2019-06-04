@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Transactions;
-using Transactions.Accounts;
+using Sunsets.Transactions;
+using Sunsets.Transactions.Accounts;
 
-namespace TransactionsTests
+namespace Sunsets.Sunsets.Transactions.Tests.Unit
 {
     [TestClass]
     public class FinancialDayTest

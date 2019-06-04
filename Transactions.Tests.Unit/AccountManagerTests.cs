@@ -2,10 +2,10 @@
 using System;
 using System.IO;
 using System.Linq;
-using Transactions;
-using Transactions.Accounts;
+using Sunsets.Transactions;
+using Sunsets.Transactions.Accounts;
 
-namespace TransactionsTests
+namespace Sunsets.Transactions.Tests.Unit
 {
     [TestClass]
     public class AccountManagerTests
@@ -65,10 +65,10 @@ namespace TransactionsTests
                 AccountManager duplicate = AccountManager.FromJson(json);
 
                 var duplicateAccount = duplicate.Accounts.First();
-                var transactions = duplicateAccount.Calendar.Days.First().TransactionCollection;
+                var Transactions = duplicateAccount.Calendar.Days.First().TransactionCollection;
 
-                Assert.AreEqual(1, transactions.Count());
-                Assert.AreEqual(500, transactions.First().Amount);
+                Assert.AreEqual(1, Transactions.Count());
+                Assert.AreEqual(500, Transactions.First().Amount);
             }
 
             [TestMethod]

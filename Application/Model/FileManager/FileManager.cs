@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Transactions;
+using Sunsets.Transactions;
 
-namespace BudgetingApp.Model.FileManager
+namespace Sunsets.Application.Model.FileManager
 {
     /// <summary>
     /// Manage files so we don't have to interact with streams or file IO anywhere else

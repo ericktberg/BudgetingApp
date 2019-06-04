@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Transactions.Accounts;
+using Sunsets.Transactions.Accounts;
 
-namespace Transactions
+namespace Sunsets.Transactions
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class Calendar

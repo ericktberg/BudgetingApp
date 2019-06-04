@@ -1,14 +1,14 @@
-﻿using BudgetingApp.Model;
-using BudgetingApp.MVVM;
+﻿using Sunsets.Application.Model;
+using Sunsets.Application.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Transactions;
-using Transactions.Accounts;
+using Sunsets.Transactions;
+using Sunsets.Transactions.Accounts;
 
-namespace BudgetingApp.ViewModel
+namespace Sunsets.Application.ViewModel
 {
     public class AccountViewModel : ViewModelBase
     {

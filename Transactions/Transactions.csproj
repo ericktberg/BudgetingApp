@@ -5,6 +5,8 @@
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
+    <AssemblyName>Sunsets.Transactions</AssemblyName>
+    <RootNamespace>Sunsets.Transactions</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

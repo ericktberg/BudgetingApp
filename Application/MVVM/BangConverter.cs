@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace BudgetingApp.MVVM
+namespace Sunsets.Application.MVVM
 {
     public class BangConverter : IValueConverter
     {
