@@ -3,18 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetingApp", "BudgetingApp\BudgetingApp.csproj", "{CDA7A681-4000-43F5-A97C-95D425BCC136}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "BudgetingApp\Application.csproj", "{CDA7A681-4000-43F5-A97C-95D425BCC136}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions", "Transactions\Transactions.csproj", "{120DD9D2-8326-416F-AA31-FBA02D747AAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionsTests", "TransactionsTests\TransactionsTests.csproj", "{E0652204-B732-4B42-8049-A0AA7DE801F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Tests.Unit", "TransactionsTests\Transactions.Tests.Unit.csproj", "{E0652204-B732-4B42-8049-A0AA7DE801F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC4A513F-D9A2-4A86-9063-0F4366E70021}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetingAppTests", "BudgetingAppTests\BudgetingAppTests.csproj", "{720AB34E-BE48-4942-8805-F72B0490C241}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests.Unit", "BudgetingAppTests\Application.Tests.Unit.csproj", "{720AB34E-BE48-4942-8805-F72B0490C241}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icons", "Icons\Icons.csproj", "{2A6372AC-992A-4AC8-AF12-8303E71013A9}"
 EndProject
