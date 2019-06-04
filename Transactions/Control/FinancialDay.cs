@@ -77,9 +77,4 @@ namespace Sunsets.Transactions
             TransactionsChanged?.Invoke(this, new EventArgs());
         }
     }
-
-    [JsonArray]
-    public class StatementDictionary : Dictionary<Account, Statement>
-    {
-    }
 }

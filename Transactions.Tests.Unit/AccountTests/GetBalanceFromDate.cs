@@ -4,6 +4,7 @@ using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Transactions.Tests.Unit.AccountTests
 {
+
     [TestClass]
     public class GetBalanceFromDate
     {
@@ -17,7 +18,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Not_Add_Transactions_After_Date()
+        public void ShouldNot_AddTransactions_AfterDate()
         {
             Account.Deposit(new Income(400), new DateTime(2001, 1, 2));
             Account.Withdraw(new Expense(600), new DateTime(2001, 1, 5));
@@ -26,7 +27,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Not_Apply_Statements_After_Date()
+        public void ShouldNot_ApplyStatements_AfterDate()
         {
             Account.AddStatement(new Statement(1000), new DateTime(2001, 1, 1));
             Account.AddStatement(new Statement(2000), new DateTime(2001, 1, 5));

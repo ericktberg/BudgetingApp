@@ -19,13 +19,13 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Have_Zero_Default_Balance()
+        public void ShouldHave_Zero_DefaultBalance()
         {
             Assert.AreEqual(0, Account.GetBalanceFromToday());
         }
 
         [TestMethod]
-        public void Should_Take_Only_Statement()
+        public void ShouldTake_OnlyStatement()
         {
             decimal statementBalance = 1000;
 
@@ -35,7 +35,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Take_Latest_Statement_Regardless_Of_Order_Added()
+        public void ShouldTake_LatestStatement_RegardlessOf_OrderAdded()
         {
             Account.AddStatement(new Statement(1000), new DateTime(1999, 1, 1));
             Account.AddStatement(new Statement(500), new DateTime(1995, 1, 1));
@@ -44,7 +44,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Add_Income_To_Balance()
+        public void ShouldAdd_Income_To_Balance()
         {
             Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
 
@@ -52,7 +52,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Subtract_Expenses_From_Balance()
+        public void ShouldSubtract_Expenses_From_Balance()
         {
             Account.Withdraw(new Expense(400), new DateTime(2000, 1, 1));
 
@@ -60,7 +60,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Override_Old_Transactions_With_New_Statements()
+        public void ShouldOverride_OldTransactions_With_NewStatements()
         {
             Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
             Account.AddStatement(new Statement(1000), new DateTime(2001, 1, 1));
@@ -69,7 +69,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Add_New_Transactions_To_Old_Statements()
+        public void ShouldAdd_NewTransactions_To_OldStatements()
         {
             Account.AddStatement(new Statement(1000), new DateTime(2001, 1, 1));
             Account.Deposit(new Income(400), new DateTime(2001, 1, 2));
@@ -79,7 +79,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Maintain_Wealth_With_Transfers()
+        public void ShouldMaintain_Wealth_With_Transfers()
         {
             var transferAccount = new Account("Test2", AccountType.Liquid);
 
@@ -90,7 +90,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Add_Transactions_To_Statement_When_BeginningOfDay()
+        public void ShouldAdd_Transactions_To_Statement_When_BeginningOfDay()
         {
             Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
             Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
@@ -99,7 +99,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Overwrite_Transactions_With_Statement_When_EndOfDay()
+        public void ShouldOverwrite_Transactions_With_Statement_When_EndOfDay()
         {
             Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.EndOfDay }, new DateTime(2000, 1, 1));
             Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
@@ -108,7 +108,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Use_Future_Statements_When_No_Previous_Exist()
+        public void ShouldUse_FutureStatements_WhenNo_Previous_Exist()
         {
             Account.AddStatement(new Statement(1000), new DateTime(2000, 1, 1));
             Account.Withdraw(new Expense(400), new DateTime(1999, 6, 1));
@@ -117,7 +117,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         }
 
         [TestMethod]
-        public void Should_Overwrite_Transactions_With_Statement_When_Beginning_Of_Day_And_Extrapolating_Backwards()
+        public void ShouldOverwrite_Transactions_With_Statement_When_BeginningOfDay_And_ExtrapolatingBackwards()
         {
             Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
             Account.Withdraw(new Expense(400), new DateTime(2000, 1, 1));

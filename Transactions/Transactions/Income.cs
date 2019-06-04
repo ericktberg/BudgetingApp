@@ -4,13 +4,6 @@ using System.Configuration;
 
 namespace Sunsets.Transactions
 {
-    public enum IncomeCategory
-    {
-        Paycheck,
-        Venmo,
-        Cash
-    }
-
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public class Income : Transaction
     {

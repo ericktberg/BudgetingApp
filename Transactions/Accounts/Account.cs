@@ -4,6 +4,11 @@ using System.Linq;
 
 namespace Sunsets.Transactions.Accounts
 {
+    /// <summary>
+    /// An <see cref="Account"/> is used to monitor and keep track of a real-life account's balance.
+    /// <para/>
+    /// This could be a checking account, savings account, credit card balance, loan, etc.
+    /// </summary>
     public class Account
     {
         public Account(string name, AccountType type) : this(name, type, new Calendar(), Guid.NewGuid())
@@ -30,6 +35,11 @@ namespace Sunsets.Transactions.Accounts
 
         [JsonProperty]
         public AccountType Type { get; set; }
+
+        public void AddRecurringTransaction(RecurringTransaction transaction)
+        {
+
+        }
 
         public void AddStatement(Statement statement, DateTime date)
         {

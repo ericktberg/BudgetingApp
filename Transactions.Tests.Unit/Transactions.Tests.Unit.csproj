@@ -51,7 +51,6 @@
     <Compile Include="AccountManagerTests\AccountManagerTester.cs" />
     <Compile Include="AccountManagerTests\ToJson.cs" />
     <Compile Include="AccountManagerTests\ToJsonFile.cs" />
-    <Compile Include="AccountTests\DebtInteraction.cs" />
     <Compile Include="AccountTests\GetBalanceFromDate.cs" />
     <Compile Include="AccountTests\GetBalanceFromToday.cs" />
     <Compile Include="CalendarTests\GetDayForDate.cs" />
