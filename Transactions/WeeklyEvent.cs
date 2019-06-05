@@ -2,6 +2,10 @@
 
 namespace Sunsets.Transactions
 {
+    /// <summary>
+    /// An event that occurs once a week on a specific day of the week.
+    /// </summary>
+    /// <seealso cref="Sunsets.Transactions.IFrequency"/>
     public class WeeklyEvent : IFrequency
     {
         public WeeklyEvent(DayOfWeek dayOfWeek)
@@ -14,7 +18,7 @@ namespace Sunsets.Transactions
         public int ElapsedEvents(DateTime startDate, DateTime endDate)
         {
             int elapsedTimes = 0;
-            
+
             DateTime nextDate = CoerceWeekday(startDate);
 
             while (nextDate <= endDate)

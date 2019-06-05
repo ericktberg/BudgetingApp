@@ -154,8 +154,6 @@ namespace Sunsets.Transactions.Accounts
             decimal summedRecurring = RecurringTransactions
                 .Sum(t =>
                 {
-
-
                     return t.Frequency.ElapsedEvents(MaxDateTime(t.StartDate, startDate), MinDateTime(t.EndDate ?? DateTime.MaxValue, endDate)) * GetDelta(t.BaseTransaction.Value);
                 });
 
