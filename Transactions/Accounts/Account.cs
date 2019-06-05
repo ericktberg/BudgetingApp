@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sunsets.Transactions.Accounts
@@ -36,9 +37,11 @@ namespace Sunsets.Transactions.Accounts
         [JsonProperty]
         public AccountType Type { get; set; }
 
+        public IList<RecurringTransaction> RecurringTransactions { get; } = new List<RecurringTransaction>();
+
         public void AddRecurringTransaction(RecurringTransaction transaction)
         {
-
+            RecurringTransactions.Add(transaction);
         }
 
         public void AddStatement(Statement statement, DateTime date)
@@ -137,10 +140,41 @@ namespace Sunsets.Transactions.Accounts
         {
             return Calendar.GetDayForDate(date).RemoveTransaction(transaction);
         }
-
+    
         private decimal SumTransactionInRange(DateTime startDate, DateTime endDate)
         {
-            return Calendar.Days.Where(d => startDate <= d.Date && d.Date <= endDate).Sum(d => d.TransactionCollection.Sum(a => GetDelta(a.Value)));
+            decimal summedTransactions = Calendar.Days
+                .Where(d =>
+                    startDate <= d.Date && d.Date <= endDate
+                )
+                .Sum(d =>
+                    d.TransactionCollection.Sum(a => GetDelta(a.Value))
+                );
+
+            decimal summedRecurring = RecurringTransactions
+                .Sum(t =>
+                {
+
+
+                    return t.Frequency.ElapsedEvents(MaxDateTime(t.StartDate, startDate), MinDateTime(t.EndDate ?? DateTime.MaxValue, endDate)) * GetDelta(t.BaseTransaction.Value);
+                });
+
+            return summedTransactions + summedRecurring;
+        }
+
+        private bool Between(DateTime compareDate, DateTime startDate, DateTime endDate)
+        {
+            return startDate <= compareDate && compareDate <= endDate;
+        }
+
+        private DateTime MinDateTime(DateTime a, DateTime b)
+        {
+            return new DateTime(Math.Min(a.Ticks, b.Ticks));
+        }
+
+        private DateTime MaxDateTime(DateTime a, DateTime b)
+        {
+            return new DateTime(Math.Max(a.Ticks, b.Ticks));
         }
     }
 }

@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace Sunsets.Transactions
 {
+
     public class RecurringTransaction
     {
-        public RecurringTransaction(Transaction baseTransaction, DateTime startDate, DateTime? endDate)
+        public RecurringTransaction(Transaction baseTransaction, IFrequency frequency, DateTime startDate, DateTime? endDate)
         {
             BaseTransaction = baseTransaction;
+            Frequency = frequency;
             StartDate = startDate;
             EndDate = endDate;
         }
+
+        public IFrequency Frequency { get; }
 
         public Transaction BaseTransaction { get; }
 
