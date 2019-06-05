@@ -58,5 +58,13 @@ namespace Sunsets.Transactions.Tests.Unit.FrequencyTests.MonthlyEventTests
 
             Assert.AreEqual(1, e.ElapsedEvents(new DateTime(2019, 2, 15), new DateTime(2019, 3, 15)));
         }
+
+        [TestMethod]
+        public void Should_WrapNextYear()
+        {
+            MonthlyEvent e = new MonthlyEvent(31);
+
+            Assert.AreEqual(3, e.ElapsedEvents(new DateTime(2019, 12, 15), new DateTime(2020, 3, 15)));
+        }
     }
 }

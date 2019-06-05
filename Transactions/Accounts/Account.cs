@@ -80,11 +80,6 @@ namespace Sunsets.Transactions.Accounts
             }
         }
 
-        public decimal GetBalanceFromToday()
-        {
-            return GetBalanceFromDate(DateTime.Now);
-        }
-
         public virtual decimal GetDelta(decimal amount)
         {
             return amount;

@@ -28,12 +28,7 @@ namespace Sunsets.Transactions
         {
             return account.GetBalanceFromDate(date);
         }
-
-        public decimal GetBalanceFromToday(Account account)
-        {
-            return account.GetBalanceFromToday();
-        }
-
+        
         #region IO Methods
 
         public static JsonSerializerSettings Settings { get; } = new JsonSerializerSettings()

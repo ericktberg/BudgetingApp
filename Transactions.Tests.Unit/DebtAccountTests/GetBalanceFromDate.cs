@@ -10,11 +10,13 @@ using Sunsets.Transactions.Accounts;
 namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
 {
     [TestClass]
-    public class GetBalanceFromToday
+    public class GetBalanceFromDate
     {
         public static Calendar Calendar { get; } = new Calendar();
 
         public DebtAccount Account { get; set; } = new DebtAccount("Test");
+
+        public DateTime Date { get; } = new DateTime(2005, 5, 5);
 
         [TestMethod]
         public void Should_Decrease_Balance_From_Deposits()
@@ -27,7 +29,7 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
         {
             Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
 
-            Assert.AreEqual(-400, Account.GetBalanceFromToday());
+            Assert.AreEqual(-400, Account.GetBalanceFromDate(Date));
         }
 
         [TestMethod]
@@ -37,8 +39,8 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
 
             Account.TransferFrom(new TransferFrom(400, secondAccount), new DateTime(2000, 1, 1));
 
-            Assert.AreEqual(400, Account.GetBalanceFromToday());
-            Assert.AreEqual(400, secondAccount.GetBalanceFromToday());
+            Assert.AreEqual(400, Account.GetBalanceFromDate(Date));
+            Assert.AreEqual(400, secondAccount.GetBalanceFromDate(Date));
         }
 
         [TestMethod]
@@ -48,8 +50,8 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
 
             Account.TransferTo(new TransferTo(400, secondAccount), new DateTime(2000, 1, 1));
 
-            Assert.AreEqual(-400, Account.GetBalanceFromToday());
-            Assert.AreEqual(-400, secondAccount.GetBalanceFromToday());
+            Assert.AreEqual(-400, Account.GetBalanceFromDate(Date));
+            Assert.AreEqual(-400, secondAccount.GetBalanceFromDate(Date));
         }
     }
 }

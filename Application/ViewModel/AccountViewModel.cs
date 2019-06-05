@@ -77,6 +77,6 @@ namespace Sunsets.Application.ViewModel
             }
         }
 
-        public decimal CurrentBalance => Account.GetBalanceFromToday();
+        public decimal CurrentBalance => Account.GetBalanceFromDate(DateTime.Now);
     }
 }

@@ -17,32 +17,47 @@ namespace Sunsets.Transactions
 
         public int ElapsedEvents(DateTime startDate, DateTime endDate)
         {
-            DateTime nextDate = startDate;
+            DateTime currentDate = startDate;
             int elapsedCount = 0;
             bool stillGoing = true;
 
             while (stillGoing)
             {
-                int startMonth = nextDate.Month;
-                int startYear = nextDate.Year;
-                
-                DateTime nextMonth = new DateTime(startYear, startMonth + 1, 1);
-                DateTime lastDayOfMonth = nextMonth.AddDays(-1);
+                int currentMonth = currentDate.Month;
+                int currentYear = currentDate.Year;
 
-                if (lastDayOfMonth > endDate)
+                int nextMonthNumber;
+                int nextYearNumber;
+
+                if (currentMonth < 12)
                 {
-                    lastDayOfMonth = endDate;
+                    nextMonthNumber = currentMonth + 1;
+                    nextYearNumber = currentYear;
+                }
+                else
+                {
+                    nextMonthNumber = 1;
+                    nextYearNumber = currentYear + 1;
+                }
+
+
+                DateTime nextMonthDate = new DateTime(nextYearNumber, nextMonthNumber, 1);
+                DateTime lastDayOfMonthDate = nextMonthDate.AddDays(-1);
+
+                if (lastDayOfMonthDate > endDate)
+                {
+                    lastDayOfMonthDate = endDate;
                     stillGoing = false;
                 }
 
-                int dayToCheck = Math.Min(DayOfMonth, DateTime.DaysInMonth(startYear, startMonth));
+                int dayToCheck = Math.Min(DayOfMonth, DateTime.DaysInMonth(currentYear, currentMonth));
 
-                if (nextDate.Day <= dayToCheck && dayToCheck <= lastDayOfMonth.Day)
+                if (currentDate.Day <= dayToCheck && dayToCheck <= lastDayOfMonthDate.Day)
                 {
                     elapsedCount++;
                 }
 
-                nextDate = nextMonth;
+                currentDate = nextMonthDate;
             }
 
             return elapsedCount;
