@@ -154,7 +154,7 @@ namespace Sunsets.Transactions.Accounts
             decimal summedRecurring = RecurringTransactions
                 .Sum(t =>
                 {
-                    return t.Frequency.ElapsedEvents(MaxDateTime(t.StartDate, startDate), MinDateTime(t.EndDate ?? DateTime.MaxValue, endDate)) * GetDelta(t.BaseTransaction.Value);
+                    return GetDelta(t.GetValueBetweenDates(startDate, endDate));
                 });
 
             return summedTransactions + summedRecurring;
@@ -165,14 +165,6 @@ namespace Sunsets.Transactions.Accounts
             return startDate <= compareDate && compareDate <= endDate;
         }
 
-        private DateTime MinDateTime(DateTime a, DateTime b)
-        {
-            return new DateTime(Math.Min(a.Ticks, b.Ticks));
-        }
 
-        private DateTime MaxDateTime(DateTime a, DateTime b)
-        {
-            return new DateTime(Math.Max(a.Ticks, b.Ticks));
-        }
     }
 }
