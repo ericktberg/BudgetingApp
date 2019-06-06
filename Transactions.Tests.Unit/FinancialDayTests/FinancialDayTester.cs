@@ -1,7 +1,7 @@
 ﻿using Moq;
 using System;
 
-namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
+namespace Sunsets.Transactions.Tests.Unit
 {
     public class MockTransaction : ITransaction
     {
@@ -78,6 +78,13 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             set => B.Setup(_ => _.HasStatement).Returns(value);
         }
     }
+}
+
+namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
+{
+
+
+   
 
     public class FinancialDayTester
     {
