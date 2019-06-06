@@ -3,8 +3,16 @@ using System;
 
 namespace Sunsets.Transactions
 {
+    public interface ITransaction
+    {
+        /// <summary>
+        /// The effect the transaction would have on assets. Improving assets is positive, adding liabilities is negative.
+        /// </summary>
+        decimal Value { get; }
+    }
+
     [JsonObject(MemberSerialization.OptIn)]
-    public abstract class Transaction
+    public abstract class Transaction : ITransaction
     {
         public Transaction(decimal amount) : this(amount, Guid.NewGuid())
         {

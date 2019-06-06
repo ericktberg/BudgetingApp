@@ -3,6 +3,7 @@ using Sunsets.Transactions;
 
 namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
 {
+
     [TestClass]
     public class AddTransaction
     {

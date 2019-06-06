@@ -1,8 +1,8 @@
-﻿namespace Sunsets.Transactions.Accounts
+﻿namespace Sunsets.Transactions
 {
     public enum AddWhen
     {
-        BeginningOfDay,
+        StartOfDay,
         EndOfDay,
     }
 }

@@ -15,7 +15,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
         public void Should_Initialize_Empty()
         {
             Assert.AreEqual(0, Day.TransactionCollection.Count);
-            Assert.AreEqual(0, Day.Statements.Count);
+            Assert.IsNull(Day.Statement);
         }
     }
 }

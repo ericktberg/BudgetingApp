@@ -68,13 +68,13 @@ namespace Sunsets.Transactions.Accounts
                 }
                 else
                 {
-                    statement = day.Statements.LastOrDefault();
-                    return statement.Balance - SumTransactionInRange(date, day.Date - AddDay(statement, AddWhen.BeginningOfDay));
+                    statement = day.Statement;
+                    return statement.Balance - SumTransactionInRange(date, day.Date - AddDay(statement, AddWhen.StartOfDay));
                 }
             }
             else
             {
-                statement = day.Statements.LastOrDefault();
+                statement = day.Statement;
 
                 return statement.Balance + SumTransactionInRange(day.Date + AddDay(statement, AddWhen.EndOfDay), date);
             }
@@ -85,9 +85,9 @@ namespace Sunsets.Transactions.Accounts
             return amount;
         }
 
-        public bool RemoveStatement(Statement statement, DateTime date)
+        public void RemoveStatement(Statement statement, DateTime date)
         {
-            return Calendar.GetDayForDate(date).RemoveStatement(statement);
+            Calendar.GetDayForDate(date).RemoveStatement();
         }
 
         private TimeSpan AddDay(Statement statement, AddWhen when)
@@ -102,12 +102,12 @@ namespace Sunsets.Transactions.Accounts
 
         private FinancialDay FirstDayWithStatement(DateTime startDate)
         {
-            return Calendar.Days.Where(d => startDate <= d.Date).FirstOrDefault(d => d.Statements.LastOrDefault() != null);
+            return Calendar.Days.Where(d => startDate <= d.Date).FirstOrDefault(d => d.Statement != null);
         }
 
         private FinancialDay LatestDayWithStatement(DateTime endDate)
         {
-            return Calendar.Days.Where(d => d.Date <= endDate).LastOrDefault(d => d.Statements.LastOrDefault() != null);
+            return Calendar.Days.Where(d => d.Date <= endDate).LastOrDefault(d => d.Statement != null);
         }
 
         private bool RemoveTransaction(Transaction transaction, DateTime date)

@@ -68,7 +68,9 @@
     <Compile Include="DebtAccountTests\GetBalanceFromDate.cs" />
     <Compile Include="FinancialDayTests\AddTransaction.cs" />
     <Compile Include="FinancialDayTests\Constructor.cs" />
+    <Compile Include="FinancialDayTests\EndingBalance.cs" />
     <Compile Include="FinancialDayTests\FinancialDayTester.cs" />
+    <Compile Include="FinancialDayTests\StartingBalance.cs" />
     <Compile Include="FrequencyTests\MonthlyEventTests\ElapsedEvents.cs" />
     <Compile Include="FrequencyTests\PolyMonthlyEventTests\ElapsedEvents.cs" />
     <Compile Include="FrequencyTests\WeeklyEventTests\ElapsedEvents.cs" />

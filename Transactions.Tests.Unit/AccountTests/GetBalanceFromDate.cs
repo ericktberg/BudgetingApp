@@ -112,7 +112,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         [TestMethod]
         public void ShouldAdd_Transactions_To_Statement_When_BeginningOfDay()
         {
-            Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
+            Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.StartOfDay }, new DateTime(2000, 1, 1));
             Account.AddTransaction(new Income(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(1400, Account.GetBalanceFromDate(Date));
@@ -139,7 +139,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         [TestMethod]
         public void ShouldOverwrite_Transactions_With_Statement_When_BeginningOfDay_And_ExtrapolatingBackwards()
         {
-            Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
+            Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.StartOfDay }, new DateTime(2000, 1, 1));
             Account.AddTransaction(new Expense(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(1000, Account.GetBalanceFromDate(new DateTime(1999, 1, 1)));
