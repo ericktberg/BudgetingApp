@@ -18,8 +18,8 @@ namespace Sunsets.Application.ViewModel
         public AccountViewModel()
         {
             Account = new Account("Test Account", AccountType.Liquid);
-            Account.Deposit(new Income(1000), new DateTime(2000, 1, 1));
-            Account.Withdraw(new Expense(500), new DateTime(2000, 2, 1));
+            Account.AddTransaction(new Income(1000), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Expense(500), new DateTime(2000, 2, 1));
             Account.AddStatement(new Statement(2300), new DateTime(1999, 1, 1));
 
             AccountTypes = EnumUtils.ToList<AccountType>();

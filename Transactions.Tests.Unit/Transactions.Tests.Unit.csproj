@@ -65,7 +65,7 @@
     <Compile Include="AccountTests\AddRecurringTransaction.cs" />
     <Compile Include="AccountTests\GetBalanceFromDate.cs" />
     <Compile Include="CalendarTests\GetDayForDate.cs" />
-    <Compile Include="DebtAccountTests\GetBalanceFromToday.cs" />
+    <Compile Include="DebtAccountTests\GetBalanceFromDate.cs" />
     <Compile Include="FinancialDayTests\AddTransaction.cs" />
     <Compile Include="FinancialDayTests\Constructor.cs" />
     <Compile Include="FinancialDayTests\FinancialDayTester.cs" />

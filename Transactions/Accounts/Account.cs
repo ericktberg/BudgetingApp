@@ -34,10 +34,10 @@ namespace Sunsets.Transactions.Accounts
         [JsonProperty]
         public string Name { get; set; }
 
+        public IList<RecurringTransaction> RecurringTransactions { get; } = new List<RecurringTransaction>();
+
         [JsonProperty]
         public AccountType Type { get; set; }
-
-        public IList<RecurringTransaction> RecurringTransactions { get; } = new List<RecurringTransaction>();
 
         public void AddRecurringTransaction(RecurringTransaction transaction)
         {
@@ -49,9 +49,9 @@ namespace Sunsets.Transactions.Accounts
             Calendar.GetDayForDate(date).AddStatement(statement);
         }
 
-        public void Deposit(Income income, DateTime date)
+        public bool AddTransaction(Transaction transaction, DateTime date)
         {
-            AddTransaction(income, date);
+            return Calendar.GetDayForDate(date).AddTransaction(transaction);
         }
 
         public decimal GetBalanceFromDate(DateTime date)
@@ -90,35 +90,14 @@ namespace Sunsets.Transactions.Accounts
             return Calendar.GetDayForDate(date).RemoveStatement(statement);
         }
 
-        public void TransferFrom(TransferFrom transfer, DateTime date)
-        {
-            if (AddTransaction(transfer, date))
-            {
-                transfer.AccountDepositedTo.TransferTo(new TransferTo(transfer.Amount, this, transfer.TransactionGuid), date);
-            }
-        }
-
-        public void TransferTo(TransferTo transfer, DateTime date)
-        {
-            if (AddTransaction(transfer, date))
-            {
-                transfer.AccountWithdrawnFrom.TransferFrom(new TransferFrom(transfer.Amount, this, transfer.TransactionGuid), date);
-            }
-        }
-
-        public void Withdraw(Expense expense, DateTime date)
-        {
-            AddTransaction(expense, date);
-        }
-
         private TimeSpan AddDay(Statement statement, AddWhen when)
         {
             return statement.AddWhen == when ? TimeSpan.FromDays(1) : TimeSpan.FromDays(0);
         }
 
-        private bool AddTransaction(Transaction transaction, DateTime date)
+        private bool Between(DateTime compareDate, DateTime startDate, DateTime endDate)
         {
-            return Calendar.GetDayForDate(date).AddTransaction(transaction);
+            return startDate <= compareDate && compareDate <= endDate;
         }
 
         private FinancialDay FirstDayWithStatement(DateTime startDate)
@@ -135,7 +114,7 @@ namespace Sunsets.Transactions.Accounts
         {
             return Calendar.GetDayForDate(date).RemoveTransaction(transaction);
         }
-    
+
         private decimal SumTransactionInRange(DateTime startDate, DateTime endDate)
         {
             decimal summedTransactions = Calendar.Days
@@ -155,11 +134,22 @@ namespace Sunsets.Transactions.Accounts
             return summedTransactions + summedRecurring;
         }
 
-        private bool Between(DateTime compareDate, DateTime startDate, DateTime endDate)
+        [System.Obsolete]
+        private void TransferFrom(TransferFrom transfer, DateTime date)
         {
-            return startDate <= compareDate && compareDate <= endDate;
+            if (AddTransaction(transfer, date))
+            {
+                transfer.AccountDepositedTo.TransferTo(new TransferTo(transfer.Amount, this, transfer.TransactionGuid), date);
+            }
         }
 
-
+        [System.Obsolete]
+        private void TransferTo(TransferTo transfer, DateTime date)
+        {
+            if (AddTransaction(transfer, date))
+            {
+                transfer.AccountWithdrawnFrom.TransferFrom(new TransferFrom(transfer.Amount, this, transfer.TransactionGuid), date);
+            }
+        }
     }
 }

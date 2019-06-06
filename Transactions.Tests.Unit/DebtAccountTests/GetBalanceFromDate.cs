@@ -27,7 +27,7 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
         [TestMethod]
         public void Should_Decrease_Debt_Balance_From_Income()
         {
-            Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Income(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(-400, Account.GetBalanceFromDate(Date));
         }
@@ -37,7 +37,7 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
         {
             Account secondAccount = new Account("Test2", AccountType.Liquid);
 
-            Account.TransferFrom(new TransferFrom(400, secondAccount), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new TransferFrom(400, secondAccount), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(400, Account.GetBalanceFromDate(Date));
             Assert.AreEqual(400, secondAccount.GetBalanceFromDate(Date));
@@ -48,7 +48,7 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
         {
             Account secondAccount = new Account("Test2", AccountType.Liquid);
 
-            Account.TransferTo(new TransferTo(400, secondAccount), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new TransferTo(400, secondAccount), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(-400, Account.GetBalanceFromDate(Date));
             Assert.AreEqual(-400, secondAccount.GetBalanceFromDate(Date));

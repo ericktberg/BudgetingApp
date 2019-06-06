@@ -66,7 +66,7 @@ namespace Sunsets.Transactions
             }
             else { return false; }
         }
-
+        
         private void OnStatementsChanged()
         {
             StatementsChanged?.Invoke(this, new EventArgs());

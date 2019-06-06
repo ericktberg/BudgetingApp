@@ -23,8 +23,8 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         [TestMethod]
         public void ShouldNot_AddTransactions_AfterDate()
         {
-            Account.Deposit(new Income(400), new DateTime(2001, 1, 2));
-            Account.Withdraw(new Expense(600), new DateTime(2001, 1, 5));
+            Account.AddTransaction(new Income(400), new DateTime(2001, 1, 2));
+            Account.AddTransaction(new Expense(600), new DateTime(2001, 1, 5));
 
             Assert.AreEqual(400, Account.GetBalanceFromDate(new DateTime(2001, 1, 3)));
         }
@@ -66,7 +66,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         [TestMethod]
         public void ShouldAdd_Income_To_Balance()
         {
-            Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Income(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(400, Account.GetBalanceFromDate(Date));
         }
@@ -74,7 +74,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         [TestMethod]
         public void ShouldSubtract_Expenses_From_Balance()
         {
-            Account.Withdraw(new Expense(400), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Expense(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(-400, Account.GetBalanceFromDate(Date));
         }
@@ -82,7 +82,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         [TestMethod]
         public void ShouldOverride_OldTransactions_With_NewStatements()
         {
-            Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Income(400), new DateTime(2000, 1, 1));
             Account.AddStatement(new Statement(1000), new DateTime(2001, 1, 1));
 
             Assert.AreEqual(1000, Account.GetBalanceFromDate(Date));
@@ -92,8 +92,8 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         public void ShouldAdd_NewTransactions_To_OldStatements()
         {
             Account.AddStatement(new Statement(1000), new DateTime(2001, 1, 1));
-            Account.Deposit(new Income(400), new DateTime(2001, 1, 2));
-            Account.Withdraw(new Expense(600), new DateTime(2001, 1, 3));
+            Account.AddTransaction(new Income(400), new DateTime(2001, 1, 2));
+            Account.AddTransaction(new Expense(600), new DateTime(2001, 1, 3));
 
             Assert.AreEqual(1000 + 400 - 600, Account.GetBalanceFromDate(Date));
         }
@@ -103,7 +103,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         {
             var transferAccount = new Account("Test2", AccountType.Liquid);
 
-            Account.TransferTo(new TransferTo(400, transferAccount), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new TransferTo(400, transferAccount), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(400, Account.GetBalanceFromDate(Date));
             Assert.AreEqual(-400, transferAccount.GetBalanceFromDate(Date));
@@ -113,7 +113,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         public void ShouldAdd_Transactions_To_Statement_When_BeginningOfDay()
         {
             Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
-            Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Income(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(1400, Account.GetBalanceFromDate(Date));
         }
@@ -122,7 +122,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         public void ShouldOverwrite_Transactions_With_Statement_When_EndOfDay()
         {
             Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.EndOfDay }, new DateTime(2000, 1, 1));
-            Account.Deposit(new Income(400), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Income(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(1000, Account.GetBalanceFromDate(Date));
         }
@@ -131,7 +131,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         public void ShouldUse_FutureStatements_WhenNo_Previous_Exist()
         {
             Account.AddStatement(new Statement(1000), new DateTime(2000, 1, 1));
-            Account.Withdraw(new Expense(400), new DateTime(1999, 6, 1));
+            Account.AddTransaction(new Expense(400), new DateTime(1999, 6, 1));
 
             Assert.AreEqual(1400, Account.GetBalanceFromDate(new DateTime(1999, 1, 1)));
         }
@@ -140,7 +140,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         public void ShouldOverwrite_Transactions_With_Statement_When_BeginningOfDay_And_ExtrapolatingBackwards()
         {
             Account.AddStatement(new Statement(1000) { AddWhen = AddWhen.BeginningOfDay }, new DateTime(2000, 1, 1));
-            Account.Withdraw(new Expense(400), new DateTime(2000, 1, 1));
+            Account.AddTransaction(new Expense(400), new DateTime(2000, 1, 1));
 
             Assert.AreEqual(1000, Account.GetBalanceFromDate(new DateTime(1999, 1, 1)));
         }
