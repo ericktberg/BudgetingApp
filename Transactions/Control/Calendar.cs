@@ -17,28 +17,62 @@ namespace Sunsets.Transactions
 
         public FinancialDay GetDayForDate(DateTime date)
         {
+            FinancialDay returnDay;
+
             lock (DayCollection)
             {
-                for (int i = 0; i < DayCollection.Count; i++)
-                {
-                    var day = DayCollection[i];
+                var existing = FindDayForDate(date, out int index);
 
-                    if (day.Date.Date.Equals(date.Date))
+                if (existing != null)
+                {
+                    returnDay = existing;
+                }
+                else
+                {
+                    returnDay = new FinancialDay(date);
+                    
+                    if (index > 0)
                     {
-                        return day;
+                        var previous = DayCollection[index - 1];
+
+                        previous.NextDay = returnDay;
+                        returnDay.PreviousDay = previous;
                     }
-                    else if (day.Date > date)
+
+                    if (index < DayCollection.Count)
                     {
-                        DayCollection.Insert(i, new FinancialDay(date));
-                        OnDayCollectionChanged();
-                        return DayCollection[i];
+                        var next = DayCollection[index];
+
+                        next.PreviousDay = returnDay;
+                        returnDay.NextDay = next;
                     }
+
+                    DayCollection.Insert(index, returnDay);
+                    OnDayCollectionChanged();
                 }
             }
 
-            DayCollection.Add(new FinancialDay(date));
-            OnDayCollectionChanged();
-            return DayCollection.Last();
+            return returnDay;
+        }
+
+
+        private FinancialDay FindDayForDate(DateTime date, out int index)
+        {
+            for (index = 0; index < DayCollection.Count; index++)
+            {
+                var day = DayCollection[index];
+
+                if (day.Date.Date.Equals(date.Date))
+                {
+                    return day;
+                }
+                else if (day.Date > date)
+                {
+                    return null;
+                }
+            }
+
+            return null;
         }
 
         private void OnDayCollectionChanged()
