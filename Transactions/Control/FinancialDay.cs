@@ -66,7 +66,7 @@ namespace Sunsets.Transactions
             }
             else { return false; }
         }
-
+        
         private void OnStatementsChanged()
         {
             StatementsChanged?.Invoke(this, new EventArgs());
@@ -76,10 +76,5 @@ namespace Sunsets.Transactions
         {
             TransactionsChanged?.Invoke(this, new EventArgs());
         }
-    }
-
-    [JsonArray]
-    public class StatementDictionary : Dictionary<Account, Statement>
-    {
     }
 }

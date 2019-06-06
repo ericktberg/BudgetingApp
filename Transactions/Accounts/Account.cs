@@ -1,9 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sunsets.Transactions.Accounts
 {
+    /// <summary>
+    /// An <see cref="Account"/> is used to monitor and keep track of a real-life account's balance.
+    /// <para/>
+    /// This could be a checking account, savings account, credit card balance, loan, etc.
+    /// </summary>
     public class Account
     {
         public Account(string name, AccountType type) : this(name, type, new Calendar(), Guid.NewGuid())
@@ -28,17 +34,24 @@ namespace Sunsets.Transactions.Accounts
         [JsonProperty]
         public string Name { get; set; }
 
+        public IList<RecurringTransaction> RecurringTransactions { get; } = new List<RecurringTransaction>();
+
         [JsonProperty]
         public AccountType Type { get; set; }
+
+        public void AddRecurringTransaction(RecurringTransaction transaction)
+        {
+            RecurringTransactions.Add(transaction);
+        }
 
         public void AddStatement(Statement statement, DateTime date)
         {
             Calendar.GetDayForDate(date).AddStatement(statement);
         }
 
-        public void Deposit(Income income, DateTime date)
+        public bool AddTransaction(Transaction transaction, DateTime date)
         {
-            AddTransaction(income, date);
+            return Calendar.GetDayForDate(date).AddTransaction(transaction);
         }
 
         public decimal GetBalanceFromDate(DateTime date)
@@ -67,11 +80,6 @@ namespace Sunsets.Transactions.Accounts
             }
         }
 
-        public decimal GetBalanceFromToday()
-        {
-            return GetBalanceFromDate(DateTime.Now);
-        }
-
         public virtual decimal GetDelta(decimal amount)
         {
             return amount;
@@ -82,35 +90,14 @@ namespace Sunsets.Transactions.Accounts
             return Calendar.GetDayForDate(date).RemoveStatement(statement);
         }
 
-        public void TransferFrom(TransferFrom transfer, DateTime date)
-        {
-            if (AddTransaction(transfer, date))
-            {
-                transfer.AccountDepositedTo.TransferTo(new TransferTo(transfer.Amount, this, transfer.TransactionGuid), date);
-            }
-        }
-
-        public void TransferTo(TransferTo transfer, DateTime date)
-        {
-            if (AddTransaction(transfer, date))
-            {
-                transfer.AccountWithdrawnFrom.TransferFrom(new TransferFrom(transfer.Amount, this, transfer.TransactionGuid), date);
-            }
-        }
-
-        public void Withdraw(Expense expense, DateTime date)
-        {
-            AddTransaction(expense, date);
-        }
-
         private TimeSpan AddDay(Statement statement, AddWhen when)
         {
             return statement.AddWhen == when ? TimeSpan.FromDays(1) : TimeSpan.FromDays(0);
         }
 
-        private bool AddTransaction(Transaction transaction, DateTime date)
+        private bool Between(DateTime compareDate, DateTime startDate, DateTime endDate)
         {
-            return Calendar.GetDayForDate(date).AddTransaction(transaction);
+            return startDate <= compareDate && compareDate <= endDate;
         }
 
         private FinancialDay FirstDayWithStatement(DateTime startDate)
@@ -130,7 +117,39 @@ namespace Sunsets.Transactions.Accounts
 
         private decimal SumTransactionInRange(DateTime startDate, DateTime endDate)
         {
-            return Calendar.Days.Where(d => startDate <= d.Date && d.Date <= endDate).Sum(d => d.TransactionCollection.Sum(a => GetDelta(a.Value)));
+            decimal summedTransactions = Calendar.Days
+                .Where(d =>
+                    startDate <= d.Date && d.Date <= endDate
+                )
+                .Sum(d =>
+                    d.TransactionCollection.Sum(a => GetDelta(a.Value))
+                );
+
+            decimal summedRecurring = RecurringTransactions
+                .Sum(t =>
+                {
+                    return GetDelta(t.GetValueBetweenDates(startDate, endDate));
+                });
+
+            return summedTransactions + summedRecurring;
+        }
+
+        [System.Obsolete]
+        private void TransferFrom(TransferFrom transfer, DateTime date)
+        {
+            if (AddTransaction(transfer, date))
+            {
+                transfer.AccountDepositedTo.TransferTo(new TransferTo(transfer.Amount, this, transfer.TransactionGuid), date);
+            }
+        }
+
+        [System.Obsolete]
+        private void TransferTo(TransferTo transfer, DateTime date)
+        {
+            if (AddTransaction(transfer, date))
+            {
+                transfer.AccountWithdrawnFrom.TransferFrom(new TransferFrom(transfer.Amount, this, transfer.TransactionGuid), date);
+            }
         }
     }
 }

@@ -7,6 +7,10 @@ using System.Text;
 
 namespace Sunsets.Transactions
 {
+    /// <summary>
+    /// <see cref="AccountManager"/> is the sum-total list of all accounts.
+    /// This could be seen akin to a users list of accounts, but it's all for me right now.
+    /// </summary>
     public class AccountManager
     {
         public AccountManager() : this(new List<Account>())
@@ -24,12 +28,7 @@ namespace Sunsets.Transactions
         {
             return account.GetBalanceFromDate(date);
         }
-
-        public decimal GetBalanceFromToday(Account account)
-        {
-            return account.GetBalanceFromToday();
-        }
-
+        
         #region IO Methods
 
         public static JsonSerializerSettings Settings { get; } = new JsonSerializerSettings()

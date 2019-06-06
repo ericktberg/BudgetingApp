@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using Sunsets.Transactions;
 using Sunsets.Transactions.Accounts;
+using System;
 
 namespace Sunsets.Application.ViewModel
 {
@@ -64,7 +65,7 @@ namespace Sunsets.Application.ViewModel
             }
         }
 
-        public decimal NetBalance => SelectedAccounts.Sum(a => AccountManager.GetBalanceFromToday(a.Account) * (a.Type == AccountType.Debt ? -1 : 1));
+        public decimal NetBalance => SelectedAccounts.Sum(a => AccountManager.GetBalanceFromDate(a.Account, DateTime.Now) * (a.Type == AccountType.Debt ? -1 : 1));
 
         public ICommand RemoveCommand { get; }
 
