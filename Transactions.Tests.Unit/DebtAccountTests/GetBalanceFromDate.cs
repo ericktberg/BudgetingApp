@@ -21,7 +21,7 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
         [TestMethod]
         public void Should_DecreaseBalance_From_PositiveValue()
         {
-            Account.AddTransaction(new MockTransaction() { Value = 400 }, new DateTime(2000, 1, 1));
+            Account.AddTransaction(new MockTransaction() { Value = 400 }.Object, new DateTime(2000, 1, 1));
 
             Assert.AreEqual(-400, Account.GetBalanceFromDate(Date));
         }
@@ -29,7 +29,7 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
         [TestMethod]
         public void Should_IncreaseBalance_From_NegativeValue()
         {
-            Account.AddTransaction(new MockTransaction() { Value = -400 }, new DateTime(2000, 1, 1));
+            Account.AddTransaction(new MockTransaction() { Value = -400 }.Object, new DateTime(2000, 1, 1));
 
             Assert.AreEqual(400, Account.GetBalanceFromDate(Date));
         }

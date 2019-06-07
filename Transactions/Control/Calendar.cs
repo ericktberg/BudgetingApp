@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Sunsets.Transactions
 {
@@ -12,8 +11,17 @@ namespace Sunsets.Transactions
 
         public IEnumerable<FinancialDay> Days => DayCollection;
 
+        public IEnumerable<RecurringTransaction> RecurringTransactions => RecurringTransactionsList;
+
+        public void AddRecurringTransaction(RecurringTransaction transaction)
+        {
+            RecurringTransactionsList.Add(transaction);
+        }
+
         [JsonProperty]
         private IList<FinancialDay> DayCollection { get; } = new List<FinancialDay>();
+
+        private IList<RecurringTransaction> RecurringTransactionsList { get; } = new List<RecurringTransaction>();
 
         public FinancialDay GetDayForDate(DateTime date)
         {
@@ -30,31 +38,13 @@ namespace Sunsets.Transactions
                 else
                 {
                     returnDay = new FinancialDay(date);
-                    
-                    if (index > 0)
-                    {
-                        var previous = DayCollection[index - 1];
 
-                        previous.NextDay = returnDay;
-                        returnDay.PreviousDay = previous;
-                    }
-
-                    if (index < DayCollection.Count)
-                    {
-                        var next = DayCollection[index];
-
-                        next.PreviousDay = returnDay;
-                        returnDay.NextDay = next;
-                    }
-
-                    DayCollection.Insert(index, returnDay);
-                    OnDayCollectionChanged();
+                    InsertDay(index, ref returnDay);
                 }
             }
 
             return returnDay;
         }
-
 
         private FinancialDay FindDayForDate(DateTime date, out int index)
         {
@@ -73,6 +63,28 @@ namespace Sunsets.Transactions
             }
 
             return null;
+        }
+
+        private void InsertDay(int index, ref FinancialDay day)
+        {
+            if (index > 0)
+            {
+                var previous = DayCollection[index - 1];
+
+                previous.NextDay = day;
+                day.PreviousDay = previous;
+            }
+
+            if (index < DayCollection.Count)
+            {
+                var next = DayCollection[index];
+
+                next.PreviousDay = day;
+                day.NextDay = next;
+            }
+
+            DayCollection.Insert(index, day);
+            OnDayCollectionChanged();
         }
 
         private void OnDayCollectionChanged()

@@ -45,7 +45,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             FinancialDay day = Tester.GetToday();
 
             decimal balance = 2000;
-            day.PreviousDay = new MockBalance(null, balance);
+            day.PreviousDay = new MockBalance(null, balance).Object;
 
             Assert.AreEqual(balance, day.StartingBalance);
         }
@@ -59,7 +59,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             day.AddStatement(new Statement(balance, AddWhen.EndOfDay));
             
             decimal income = 500;
-            day.AddTransaction(new MockTransaction() { Value = income });
+            day.AddTransaction(new MockTransaction() { Value = income }.Object);
 
             Assert.AreEqual(balance - income, day.StartingBalance);
         }
@@ -68,7 +68,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
         public void Should_StartWith_PreviousDays_EndingBalance_If_ItHasStatement()
         {
             FinancialDay day = Tester.GetToday();
-            day.PreviousDay = new MockBalance(0, 500) { HasStatementOnLeft = true };
+            day.PreviousDay = new MockBalance(0, 500) { HasStatementOnLeft = true }.Object;
             
             decimal balance = 1000;
             day.AddStatement(new Statement(balance, AddWhen.EndOfDay));
@@ -80,7 +80,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
         public void Should_StartWith_StatementBalance_If_PreviousDay_HasNoStatement()
         {
             FinancialDay day = Tester.GetToday();
-            day.PreviousDay = new MockBalance(0, 500) { HasStatementOnLeft = false };
+            day.PreviousDay = new MockBalance(0, 500) { HasStatementOnLeft = false }.Object;
 
             decimal balance = 1000;
             day.AddStatement(new Statement(balance, AddWhen.EndOfDay));
@@ -101,7 +101,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             yesterday.AddStatement(new Statement(balance, AddWhen.StartOfDay));
 
             decimal income = 500;
-            today.AddTransaction(new MockTransaction() { Value = income });
+            today.AddTransaction(new MockTransaction() { Value = income }.Object);
 
             Assert.AreEqual(balance, yesterday.StartingBalance);
             Assert.AreEqual(balance, yesterday.EndingBalance);
@@ -119,10 +119,10 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             yesterday.NextDay = today;
 
             decimal income = 1000;
-            yesterday.AddTransaction(new MockTransaction() { Value = income });
+            yesterday.AddTransaction(new MockTransaction() { Value = income }.Object);
 
             decimal expense = -500;
-            today.AddTransaction(new MockTransaction() { Value = expense });
+            today.AddTransaction(new MockTransaction() { Value = expense }.Object);
 
             Assert.AreEqual(0, yesterday.StartingBalance);
             Assert.AreEqual(income, yesterday.EndingBalance);
@@ -143,7 +143,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             tomorrow.AddStatement(new Statement(balance, AddWhen.EndOfDay));
 
             decimal income = 500;
-            today.AddTransaction(new MockTransaction() { Value = income });
+            today.AddTransaction(new MockTransaction() { Value = income }.Object);
             
             Assert.AreEqual(balance - income, today.StartingBalance);
             Assert.AreEqual(balance, today.EndingBalance);

@@ -8,6 +8,7 @@ using Sunsets.Transactions;
 
 namespace Sunsets.Transactions.Tests.Unit.CalendarTests
 {
+
     [TestClass]
     public class GetDayForDate
     {

@@ -41,7 +41,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             FinancialDay day = Tester.GetToday();
             decimal income = 500;
 
-            day.AddTransaction(new MockTransaction() { Value = income });
+            day.AddTransaction(new MockTransaction() { Value = income }.Object);
             Assert.AreEqual(income, day.EndingBalance);
         }
 
@@ -51,7 +51,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             FinancialDay day = Tester.GetToday();
             decimal expense = -500;
 
-            day.AddTransaction(new MockTransaction() { Value = expense });
+            day.AddTransaction(new MockTransaction() { Value = expense }.Object);
             Assert.AreEqual(expense, day.EndingBalance);
         }
 
@@ -64,7 +64,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             day.AddStatement(new Statement(balance, AddWhen.EndOfDay));
 
             decimal income = 500;
-            day.AddTransaction(new MockTransaction() { Value = income });
+            day.AddTransaction(new MockTransaction() { Value = income }.Object);
 
             Assert.AreEqual(balance, day.EndingBalance);
         }
@@ -79,7 +79,7 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
 
             decimal income = 500;
 
-            day.AddTransaction(new MockTransaction() { Value = income });
+            day.AddTransaction(new MockTransaction() { Value = income }.Object);
 
             Assert.AreEqual(balance + income, day.EndingBalance);
         }
@@ -93,11 +93,11 @@ namespace Sunsets.Transactions.Tests.Unit.FinancialDayTests
             day.PreviousDay = new MockBalance(null, balance)
             {
                 HasStatementOnLeft = true
-            };
+            }.Object;
             Assert.AreEqual(balance, day.StartingBalance);
 
             decimal income = 500;
-            day.AddTransaction(new MockTransaction() { Value = income });
+            day.AddTransaction(new MockTransaction() { Value = income }.Object);
 
             Assert.AreEqual(balance + income, day.EndingBalance);
         }
