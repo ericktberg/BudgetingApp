@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sunsets.Transactions
 {
@@ -14,53 +16,54 @@ namespace Sunsets.Transactions
         }
 
         public int DayOfMonth { get; }
-
+        
         public int ElapsedEvents(DateTime startDate, DateTime endDate)
         {
-            DateTime currentDate = startDate;
-            int elapsedCount = 0;
+            return ListDatesBetween(startDate, endDate).Count();
+        }
+
+        public IEnumerable<DateTime> ListDatesBetween(DateTime from, DateTime to)
+        {
+            var list = new List<DateTime>();
+            DateTime currentDate = from;
             bool stillGoing = true;
 
             while (stillGoing)
             {
-                int currentMonth = currentDate.Month;
-                int currentYear = currentDate.Year;
-
                 int nextMonthNumber;
                 int nextYearNumber;
 
-                if (currentMonth < 12)
+                if (currentDate.Month < 12)
                 {
-                    nextMonthNumber = currentMonth + 1;
-                    nextYearNumber = currentYear;
+                    nextMonthNumber = currentDate.Month + 1;
+                    nextYearNumber = currentDate.Year;
                 }
                 else
                 {
                     nextMonthNumber = 1;
-                    nextYearNumber = currentYear + 1;
+                    nextYearNumber = currentDate.Year + 1;
                 }
-
 
                 DateTime nextMonthDate = new DateTime(nextYearNumber, nextMonthNumber, 1);
                 DateTime lastDayOfMonthDate = nextMonthDate.AddDays(-1);
 
-                if (lastDayOfMonthDate > endDate)
+                if (lastDayOfMonthDate > to)
                 {
-                    lastDayOfMonthDate = endDate;
+                    lastDayOfMonthDate = to;
                     stillGoing = false;
                 }
 
-                int dayToCheck = Math.Min(DayOfMonth, DateTime.DaysInMonth(currentYear, currentMonth));
+                int dayToCheck = Math.Min(DayOfMonth, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
 
                 if (currentDate.Day <= dayToCheck && dayToCheck <= lastDayOfMonthDate.Day)
                 {
-                    elapsedCount++;
+                    list.Add(new DateTime(currentDate.Year, currentDate.Month, dayToCheck));
                 }
 
                 currentDate = nextMonthDate;
             }
 
-            return elapsedCount;
+            return list;
         }
     }
 }

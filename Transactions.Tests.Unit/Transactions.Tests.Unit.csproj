@@ -72,8 +72,11 @@
     <Compile Include="FinancialDayTests\FinancialDayTester.cs" />
     <Compile Include="FinancialDayTests\StartingBalance.cs" />
     <Compile Include="FrequencyTests\MonthlyEventTests\ElapsedEvents.cs" />
+    <Compile Include="FrequencyTests\MonthlyEventTests\ListDatesBetween.cs" />
     <Compile Include="FrequencyTests\PolyMonthlyEventTests\ElapsedEvents.cs" />
+    <Compile Include="FrequencyTests\PolyMonthlyEventTests\ListDatesBetween.cs" />
     <Compile Include="FrequencyTests\WeeklyEventTests\ElapsedEvents.cs" />
+    <Compile Include="FrequencyTests\WeeklyEventTests\ListDatesBetween.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecurringTransactionTests\GetValueBetweenDates.cs" />
   </ItemGroup>

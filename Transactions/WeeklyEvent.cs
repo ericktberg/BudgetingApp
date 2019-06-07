@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sunsets.Transactions
 {
@@ -17,21 +19,26 @@ namespace Sunsets.Transactions
 
         public int ElapsedEvents(DateTime startDate, DateTime endDate)
         {
-            int elapsedTimes = 0;
+            return ListDatesBetween(startDate, endDate).Count();
+        }
 
-            DateTime nextDate = CoerceWeekday(startDate);
+        public IEnumerable<DateTime> ListDatesBetween(DateTime from, DateTime to)
+        {
+            var list = new List<DateTime>();
 
-            while (nextDate <= endDate)
+            DateTime nextDate = CoerceWeekday(from);
+
+            while (nextDate <= to)
             {
-                if (nextDate >= startDate)
+                if (nextDate >= from)
                 {
-                    elapsedTimes++;
+                    list.Add(nextDate);
                 }
 
                 nextDate = nextDate.AddDays(7);
             }
 
-            return elapsedTimes;
+            return list;
         }
 
         private DateTime CoerceWeekday(DateTime date)

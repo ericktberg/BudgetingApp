@@ -23,7 +23,21 @@ namespace Sunsets.Transactions
 
         public int ElapsedEvents(DateTime startDate, DateTime endDate)
         {
-            return Events.Sum(e => e.ElapsedEvents(startDate, endDate));
+            return ListDatesBetween(startDate, endDate).Count();
+        }
+
+        public IEnumerable<DateTime> ListDatesBetween(DateTime from, DateTime to)
+        {
+            return Events
+                .Select(d =>
+                {
+                    return d.ListDatesBetween(from, to);
+                })
+                .Aggregate((a, b) =>
+                {
+                    return a.Concat(b);
+                })
+                .OrderBy(d => d.Date);
         }
     }
 }

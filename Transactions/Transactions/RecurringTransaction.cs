@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 namespace Sunsets.Transactions
 {
 
+    public class RecurringTransactionElement : ITransaction
+    {
+        public RecurringTransactionElement(RecurringTransaction parent)
+        {
+            Parent = parent;
+        }
+
+        public RecurringTransaction Parent { get; }
+
+        public decimal Value => Parent.BaseTransaction.Value;
+    }
+
     public class RecurringTransaction
     {
         public RecurringTransaction(Transaction baseTransaction, IFrequency frequency, DateTime startDate, DateTime? endDate)
@@ -44,7 +56,7 @@ namespace Sunsets.Transactions
                 return 0;
             }
 
-            return Frequency.ElapsedEvents(from, to) * BaseTransaction.Value;
+            return 0; // Frequency.ElapsedEvents(from, to) * BaseTransaction.Value;
         }
 
         private DateTime MinDateTime(DateTime a, DateTime b)
