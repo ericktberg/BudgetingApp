@@ -1,7 +1,38 @@
 ﻿using Moq;
+using System;
+using System.Collections.Generic;
 
 namespace Sunsets.Transactions.Tests.Unit
 {
+    public class MockRecurringTransaction : Mock<IRecurringTransaction>
+    {
+        public MockRecurringTransaction()
+        {
+            Setup(_ => _.EnumerateElementsUntilDate(It.IsAny<DateTime>()))
+                .Callback((DateTime to) =>
+                {
+                    List<RecurringTransactionElement> list = new List<RecurringTransactionElement>();
+
+                    foreach (var d in Dates)
+                    {
+                        if (d <= to)
+                        {
+                            list.Add(new RecurringTransactionElement(Object, d));
+                        }
+                    }
+
+                    Setup(_ => _.Elements).Returns(list);
+                });
+
+            Setup(_ => _.BaseTransaction).Returns(() => BaseTransaction.Object);
+        }
+
+
+        public IList<DateTime> Dates { get; } = new List<DateTime>();
+
+        public MockTransaction BaseTransaction { get; set; } = new MockTransaction() { Value = 500 };
+    }
+
     public class MockBalance : Mock<IHaveBalance>
     {
         public MockBalance(decimal? starting, decimal? ending)

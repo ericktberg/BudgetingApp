@@ -9,7 +9,7 @@ namespace Sunsets.Transactions
 
     public class RecurringTransactionElement : ITransaction
     {
-        public RecurringTransactionElement(RecurringTransaction parent, DateTime date)
+        public RecurringTransactionElement(IRecurringTransaction parent, DateTime date)
         {
             Parent = parent;
             Date = date;
@@ -17,7 +17,7 @@ namespace Sunsets.Transactions
 
         public DateTime Date { get; }
 
-        public RecurringTransaction Parent { get; }
+        public IRecurringTransaction Parent { get; }
 
         public decimal Value => Parent.BaseTransaction.Value;
     }
@@ -26,10 +26,12 @@ namespace Sunsets.Transactions
     {
         IEnumerable<RecurringTransactionElement> Elements { get; }
 
+        ITransaction BaseTransaction { get; }
+
         void EnumerateElementsUntilDate(DateTime to);
     }
 
-    public class RecurringTransaction
+    public class RecurringTransaction : IRecurringTransaction
     {
         public RecurringTransaction(ITransaction baseTransaction, IFrequency frequency, DateTime startDate, DateTime? endDate)
         {
@@ -70,24 +72,11 @@ namespace Sunsets.Transactions
         
         public decimal GetValueBetweenDates(DateTime from, DateTime to)
         {
-            from = MaxDateTime(StartDate, from);
+            EnumerateElementsUntilDate(to);
 
-            if (EndDate.HasValue)
-            {
-                to = MinDateTime(EndDate.Value, to);
-
-                if (from > EndDate.Value)
-                {
-                    return 0;
-                }
-            }
-
-            if (to < StartDate)
-            {
-                return 0;
-            }
-
-            return Frequency.ListDatesBetween(from, to).Count() * BaseTransaction.Value;
+            return Elements
+                .Where(e => e.Date.Date >= from.Date && e.Date.Date <= to.Date)
+                .Sum(e => e.Value);
         }
 
         private DateTime MinDateTime(DateTime a, DateTime b)

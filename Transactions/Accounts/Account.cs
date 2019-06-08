@@ -39,9 +39,9 @@ namespace Sunsets.Transactions.Accounts
         [JsonProperty]
         public AccountType Type { get; set; }
 
-        public void AddRecurringTransaction(RecurringTransaction transaction)
+        public void AddRecurringTransaction(IRecurringTransaction transaction)
         {
-            RecurringTransactions.Add(transaction);
+            Calendar.AddRecurringTransaction(transaction);
         }
 
         public void AddStatement(Statement statement, DateTime date)

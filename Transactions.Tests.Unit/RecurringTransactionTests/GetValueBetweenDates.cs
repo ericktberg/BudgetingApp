@@ -26,12 +26,14 @@ namespace Sunsets.Transactions.Tests.Unit.RecurringTransactionTests
         }
 
         [TestMethod]
-        public void Should_ComputeValue_From_Frequency()
+        public void Should_ComputeValue_From_Dates()
         {
             RecurringTransaction t = new RecurringTransaction(new Income(500), Tester.MockFrequency.Object, new DateTime(2019, 1, 1), new DateTime(2019, 1, 30));
-            
 
-            Assert.AreEqual(500, t.GetValueBetweenDates(new DateTime(2019, 1, 1), new DateTime(2019, 2, 24)));
+            Tester.MockFrequency.DateCollection.Add(new DateTime(2019, 1, 4));
+            Tester.MockFrequency.DateCollection.Add(new DateTime(2019, 1, 11));
+
+            Assert.AreEqual(1000, t.GetValueBetweenDates(new DateTime(2019, 1, 1), new DateTime(2019, 2, 24)));
         }
 
         [TestMethod]
@@ -39,9 +41,10 @@ namespace Sunsets.Transactions.Tests.Unit.RecurringTransactionTests
         {
             RecurringTransaction t = new RecurringTransaction(new Income(500), Tester.MockFrequency.Object, new DateTime(2019, 1, 1), new DateTime(2019, 1, 30));
 
+            Tester.MockFrequency.DateCollection.Add(new DateTime(2018, 1, 4));
+            Tester.MockFrequency.DateCollection.Add(new DateTime(2019, 1, 11));
 
             Assert.AreEqual(500, t.GetValueBetweenDates(new DateTime(2018, 1, 1), new DateTime(2019, 2, 24)));
-            // Tester.MockFrequency.Verify(_ => _.ElapsedEvents(It.Is<DateTime>(d => d == t.StartDate), It.IsAny<DateTime>()));
         }
 
         [TestMethod]
@@ -49,9 +52,10 @@ namespace Sunsets.Transactions.Tests.Unit.RecurringTransactionTests
         {
             RecurringTransaction t = new RecurringTransaction(new Income(500), Tester.MockFrequency.Object, new DateTime(2019, 1, 1), new DateTime(2019, 1, 30));
 
+            Tester.MockFrequency.DateCollection.Add(new DateTime(2019, 1, 4));
+            Tester.MockFrequency.DateCollection.Add(new DateTime(2020, 1, 11));
 
             Assert.AreEqual(500, t.GetValueBetweenDates(new DateTime(2018, 1, 1), new DateTime(2020, 2, 24)));
-            // Tester.MockFrequency.Verify(_ => _.ElapsedEvents(It.IsAny<DateTime>(), It.Is<DateTime>(d => d == t.EndDate)));
         }
     }
 }

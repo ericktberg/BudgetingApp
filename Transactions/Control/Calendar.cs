@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sunsets.Transactions
 {
@@ -11,17 +12,28 @@ namespace Sunsets.Transactions
 
         public IEnumerable<FinancialDay> Days => DayCollection;
 
-        public IEnumerable<RecurringTransaction> RecurringTransactions => RecurringTransactionsList;
+        public IEnumerable<IRecurringTransaction> RecurringTransactions => RecurringTransactionsList;
 
-        public void AddRecurringTransaction(RecurringTransaction transaction)
+        public void AddRecurringTransaction(IRecurringTransaction transaction)
         {
             RecurringTransactionsList.Add(transaction);
+
+            if (DayCollection.Any())
+            {
+                transaction.EnumerateElementsUntilDate(DayCollection.Last().Date);
+            }
+
+            foreach (var el in transaction.Elements)
+            {
+                var day = GetDayForDate(el.Date);
+                day.AddTransaction(el);
+            }
         }
 
         [JsonProperty]
         private IList<FinancialDay> DayCollection { get; } = new List<FinancialDay>();
 
-        private IList<RecurringTransaction> RecurringTransactionsList { get; } = new List<RecurringTransaction>();
+        private IList<IRecurringTransaction> RecurringTransactionsList { get; } = new List<IRecurringTransaction>();
 
         public FinancialDay GetDayForDate(DateTime date)
         {
