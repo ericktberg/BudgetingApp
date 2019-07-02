@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sunsets.Transactions.Accounts
+namespace Sunsets.Transactions
 {
     /// <summary>
     /// An <see cref="Account"/> is used to monitor and keep track of a real-life account's balance.
@@ -53,7 +53,7 @@ namespace Sunsets.Transactions.Accounts
         {
             return Calendar.GetDayForDate(date).AddTransaction(transaction);
         }
-
+        
         public decimal GetBalanceFromDate(DateTime date)
         {
             return GetDelta(Calendar.GetDayForDate(date).EndingBalance);

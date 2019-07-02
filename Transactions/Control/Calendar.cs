@@ -16,6 +16,16 @@ namespace Sunsets.Transactions
 
         public void AddRecurringTransaction(IRecurringTransaction transaction)
         {
+            /* TODO:
+             * When should we enumerate elements? When do we add them to the calendar?
+             * 
+             * It's not enough to add them when we add the transaction in. It's a kludge, and it shows that we can at least get it to work, but it isn't great.
+             * 
+             * TODO: #2
+             * How does a recurring transaction handle a Transfer? It might have to be:
+             *  1. Identify a transfer as a composite object made of 2 accounts and 1 Amount. The value is inverted between the accounts
+             *  2. Transactions will need to be rethought completely...
+             */ 
             RecurringTransactionsList.Add(transaction);
 
             if (DayCollection.Any())

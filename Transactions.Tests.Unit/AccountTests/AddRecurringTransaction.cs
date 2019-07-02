@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sunsets.Transactions.Accounts;
+using Sunsets.Transactions;
 using System;
 using Moq;
 

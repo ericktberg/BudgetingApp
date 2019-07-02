@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sunsets.Transactions.Accounts;
+using Sunsets.Transactions;
 
 namespace Sunsets.Transactions.Tests.Unit.AccountTests
 {
@@ -96,17 +96,6 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
             Account.AddTransaction(new Expense(600), new DateTime(2001, 1, 3));
 
             Assert.AreEqual(1000 + 400 - 600, Account.GetBalanceFromDate(Date));
-        }
-
-        [TestMethod]
-        public void ShouldMaintain_Wealth_With_Transfers()
-        {
-            var transferAccount = new Account("Test2", AccountType.Liquid);
-
-            Account.AddTransaction(new TransferTo(400, transferAccount), new DateTime(2000, 1, 1));
-
-            Assert.AreEqual(400, Account.GetBalanceFromDate(Date));
-            Assert.AreEqual(-400, transferAccount.GetBalanceFromDate(Date));
         }
 
         [TestMethod]

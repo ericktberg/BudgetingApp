@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountManagerTests\AccountManagerTester.cs" />
+    <Compile Include="AccountManagerTests\Transfer.cs" />
     <Compile Include="AccountTests\AddRecurringTransaction.cs" />
     <Compile Include="AccountTests\GetBalanceFromDate.cs" />
     <Compile Include="CalendarTests\AddRecurringTransaction.cs" />

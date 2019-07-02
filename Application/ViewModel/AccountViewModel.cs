@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sunsets.Transactions;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Application.ViewModel
 {

@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Sunsets.Transactions;
-using Sunsets.Transactions.Accounts;
 using System;
 
 namespace Sunsets.Application.ViewModel

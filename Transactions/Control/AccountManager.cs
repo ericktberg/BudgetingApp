@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Sunsets.Transactions.Accounts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +27,15 @@ namespace Sunsets.Transactions
         {
             return account.GetBalanceFromDate(date);
         }
-        
+
+        public bool Transfer(Account transferFrom, Account transferTo, decimal amount, DateTime date)
+        {
+            transferFrom.AddTransaction(new TransferFrom(amount, transferTo), date);
+            transferTo.AddTransaction(new TransferTo(amount, transferFrom), date);
+
+            return true;
+        }
+
         #region IO Methods
 
         public static JsonSerializerSettings Settings { get; } = new JsonSerializerSettings()

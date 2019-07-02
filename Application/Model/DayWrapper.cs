@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Sunsets.Transactions;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Application.Model
 {
