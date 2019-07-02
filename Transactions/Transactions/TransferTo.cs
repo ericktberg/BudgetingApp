@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
-using Sunsets.Transactions.Accounts;
+using Sunsets.Transactions;
 
 namespace Sunsets.Transactions
 {

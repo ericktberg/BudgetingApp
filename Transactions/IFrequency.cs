@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Sunsets.Transactions
 {
     public interface IFrequency
     {
-        int ElapsedEvents(DateTime startDate, DateTime endDate);
+        IEnumerable<DateTime> ListDatesBetween(DateTime from, DateTime to);
     }
 }

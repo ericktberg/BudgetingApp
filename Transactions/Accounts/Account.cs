@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sunsets.Transactions.Accounts
+namespace Sunsets.Transactions
 {
     /// <summary>
     /// An <see cref="Account"/> is used to monitor and keep track of a real-life account's balance.
@@ -39,9 +39,9 @@ namespace Sunsets.Transactions.Accounts
         [JsonProperty]
         public AccountType Type { get; set; }
 
-        public void AddRecurringTransaction(RecurringTransaction transaction)
+        public void AddRecurringTransaction(IRecurringTransaction transaction)
         {
-            RecurringTransactions.Add(transaction);
+            Calendar.AddRecurringTransaction(transaction);
         }
 
         public void AddStatement(Statement statement, DateTime date)
@@ -49,35 +49,14 @@ namespace Sunsets.Transactions.Accounts
             Calendar.GetDayForDate(date).AddStatement(statement);
         }
 
-        public bool AddTransaction(Transaction transaction, DateTime date)
+        public bool AddTransaction(ITransaction transaction, DateTime date)
         {
             return Calendar.GetDayForDate(date).AddTransaction(transaction);
         }
-
+        
         public decimal GetBalanceFromDate(DateTime date)
         {
-            FinancialDay day = LatestDayWithStatement(date);
-            Statement statement;
-            if (day == null)
-            {
-                day = FirstDayWithStatement(date);
-
-                if (day == null)
-                {
-                    return SumTransactionInRange(new DateTime(), date);
-                }
-                else
-                {
-                    statement = day.Statements.LastOrDefault();
-                    return statement.Balance - SumTransactionInRange(date, day.Date - AddDay(statement, AddWhen.BeginningOfDay));
-                }
-            }
-            else
-            {
-                statement = day.Statements.LastOrDefault();
-
-                return statement.Balance + SumTransactionInRange(day.Date + AddDay(statement, AddWhen.EndOfDay), date);
-            }
+            return GetDelta(Calendar.GetDayForDate(date).EndingBalance);
         }
 
         public virtual decimal GetDelta(decimal amount)
@@ -85,55 +64,11 @@ namespace Sunsets.Transactions.Accounts
             return amount;
         }
 
-        public bool RemoveStatement(Statement statement, DateTime date)
+        public void RemoveStatement(Statement statement, DateTime date)
         {
-            return Calendar.GetDayForDate(date).RemoveStatement(statement);
+            Calendar.GetDayForDate(date).RemoveStatement();
         }
-
-        private TimeSpan AddDay(Statement statement, AddWhen when)
-        {
-            return statement.AddWhen == when ? TimeSpan.FromDays(1) : TimeSpan.FromDays(0);
-        }
-
-        private bool Between(DateTime compareDate, DateTime startDate, DateTime endDate)
-        {
-            return startDate <= compareDate && compareDate <= endDate;
-        }
-
-        private FinancialDay FirstDayWithStatement(DateTime startDate)
-        {
-            return Calendar.Days.Where(d => startDate <= d.Date).FirstOrDefault(d => d.Statements.LastOrDefault() != null);
-        }
-
-        private FinancialDay LatestDayWithStatement(DateTime endDate)
-        {
-            return Calendar.Days.Where(d => d.Date <= endDate).LastOrDefault(d => d.Statements.LastOrDefault() != null);
-        }
-
-        private bool RemoveTransaction(Transaction transaction, DateTime date)
-        {
-            return Calendar.GetDayForDate(date).RemoveTransaction(transaction);
-        }
-
-        private decimal SumTransactionInRange(DateTime startDate, DateTime endDate)
-        {
-            decimal summedTransactions = Calendar.Days
-                .Where(d =>
-                    startDate <= d.Date && d.Date <= endDate
-                )
-                .Sum(d =>
-                    d.TransactionCollection.Sum(a => GetDelta(a.Value))
-                );
-
-            decimal summedRecurring = RecurringTransactions
-                .Sum(t =>
-                {
-                    return GetDelta(t.GetValueBetweenDates(startDate, endDate));
-                });
-
-            return summedTransactions + summedRecurring;
-        }
-
+        
         [System.Obsolete]
         private void TransferFrom(TransferFrom transfer, DateTime date)
         {

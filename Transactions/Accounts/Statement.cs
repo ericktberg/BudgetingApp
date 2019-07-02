@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace Sunsets.Transactions.Accounts
+namespace Sunsets.Transactions
 {
     public class Statement
     {
-        public Statement(decimal balance, AddWhen addWhen = AddWhen.BeginningOfDay)
+        public Statement(decimal balance, AddWhen addWhen = AddWhen.StartOfDay)
         {
             Balance = balance;
             AddWhen = addWhen;

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Sunsets.Transactions;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Application.Model
 {
@@ -17,14 +16,13 @@ namespace Sunsets.Application.Model
         {
             Day = day;
 
-            Statements = new ObservableCollection<Statement>(Day.Statements);
-            Transactions = new ObservableCollection<Transaction>(Day.TransactionCollection);
-
-            Day.StatementsChanged += Day_StatementsChanged;
+            Statements = Day.Statement;
+            Transactions = new ObservableCollection<ITransaction>(Day.TransactionCollection);
+            
             Day.TransactionsChanged += Day_TransactionsChanged;
 
             RemoveStatementCommand = new RelayCommand<Statement>(RemoveStatement);
-            RemoveTransactionCommand = new RelayCommand<Transaction>(RemoveTransaction);
+            RemoveTransactionCommand = new RelayCommand<ITransaction>(RemoveTransaction);
         }
 
         public ICommand RemoveStatementCommand { get; }
@@ -35,25 +33,20 @@ namespace Sunsets.Application.Model
 
         public FinancialDay Day { get; }
 
-        public ObservableCollection<Statement> Statements { get; }
+        public Statement Statements { get; set; }
 
-        public ObservableCollection<Transaction> Transactions { get; }
+        public ObservableCollection<ITransaction> Transactions { get; }
 
         public void RemoveStatement(Statement statement)
         {
-            Day.RemoveStatement(statement);
+            Statements = null;
         }
 
-        public void RemoveTransaction(Transaction transaction)
+        public void RemoveTransaction(ITransaction transaction)
         {
             Day.RemoveTransaction(transaction);
         }
-
-        private void Day_StatementsChanged(object sender, EventArgs e)
-        {
-            ListUtils.MatchListChanges(Statements, Day.Statements);
-        }
-
+        
         private void Day_TransactionsChanged(object sender, EventArgs e)
         {
             ListUtils.MatchListChanges(Transactions, Day.TransactionCollection);

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Sunsets.Transactions;
-using Sunsets.Transactions.Accounts;
 
 namespace Sunsets.Application.ViewModel
 {

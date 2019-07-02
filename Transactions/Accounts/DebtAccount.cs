@@ -1,4 +1,4 @@
-﻿namespace Sunsets.Transactions.Accounts
+﻿namespace Sunsets.Transactions
 {
     public class DebtAccount : Account
     {

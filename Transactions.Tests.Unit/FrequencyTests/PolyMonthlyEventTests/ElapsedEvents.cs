@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sunsets.Transactions.Tests.Unit.FrequencyTests.PolyMonthlyEventTests
 {
+
     [TestClass]
     public class ElapsedEvents
     {

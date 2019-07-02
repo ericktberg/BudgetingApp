@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Sunsets.Transactions.Accounts;
+using Sunsets.Transactions;
 using System;
 
 namespace Sunsets.Transactions
