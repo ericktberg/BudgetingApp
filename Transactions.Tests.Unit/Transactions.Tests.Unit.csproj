@@ -50,6 +50,9 @@
     <Reference Include="Moq, Version=4.11.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.11.0\lib\net45\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -68,6 +71,7 @@
     <Compile Include="CalendarTests\AddRecurringTransaction.cs" />
     <Compile Include="CalendarTests\CalendarTester.cs" />
     <Compile Include="CalendarTests\GetDayForDate.cs" />
+    <Compile Include="CalendarTests\Json.cs" />
     <Compile Include="Mocks\MockBalance.cs" />
     <Compile Include="Mocks\MockTransaction.cs" />
     <Compile Include="Mocks\MockFrequency.cs" />
