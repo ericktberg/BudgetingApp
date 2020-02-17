@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Sunsets.Transactions
@@ -13,6 +14,8 @@ namespace Sunsets.Transactions
 
         decimal StartingBalance { get; }
 
+        event EventHandler BalanceChanged;
+
         bool StatementOnLeft();
 
         bool StatementOnRight();
@@ -20,6 +23,7 @@ namespace Sunsets.Transactions
         void UpdateBalance();
     }
 
+    [DebuggerDisplay("{Date}: Start={StartingBalance}; End={EndingBalance}")]
     [JsonObject(MemberSerialization.OptIn)]
     public class FinancialDay : IHaveBalance
     {
@@ -34,9 +38,7 @@ namespace Sunsets.Transactions
         }
 
         public event EventHandler BalanceChanged;
-
         public event EventHandler StatementsChanged;
-
         public event EventHandler TransactionsChanged;
 
         [JsonProperty]
@@ -51,9 +53,29 @@ namespace Sunsets.Transactions
             get => _nextDay;
             set
             {
-                _nextDay = value;
+                if (_nextDay != value)
+                {
+                    if (_nextDay != null)
+                    {
+                        _nextDay.BalanceChanged -= NextDay_BalanceChanged;
+                    }
+
+                    _nextDay = value;
+
+                    if (_nextDay != null)
+                    {
+                        _nextDay.BalanceChanged += NextDay_BalanceChanged;
+                    }
+                }
+
+
                 OnBalanceChanged();
             }
+        }
+
+        private void NextDay_BalanceChanged(object sender, EventArgs e)
+        {
+            OnBalanceChanged();
         }
 
         public IHaveBalance PreviousDay

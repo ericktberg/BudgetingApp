@@ -2,9 +2,9 @@
 {
     public enum AccountType
     {
-        Liquid,
+        Asset,
         Invested,
-        Debt,
+        Liability,
         Property,
     }
 }

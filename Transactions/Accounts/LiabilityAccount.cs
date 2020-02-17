@@ -1,8 +1,8 @@
 ﻿namespace Sunsets.Transactions
 {
-    public class DebtAccount : Account
+    public class LiabilityAccount : Account
     {
-        public DebtAccount(string name) : base(name, AccountType.Debt)
+        public LiabilityAccount(string name) : base(name, AccountType.Liability)
         {
         }
 

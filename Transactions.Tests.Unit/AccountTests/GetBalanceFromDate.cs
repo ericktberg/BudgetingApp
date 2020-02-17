@@ -17,7 +17,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
         [TestInitialize]
         public void Init()
         {
-            Account = new Account("Test", AccountType.Liquid);
+            Account = new Account("Test", AccountType.Asset);
         }
 
         [TestMethod]
@@ -123,6 +123,17 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
             Account.AddTransaction(new Expense(400), new DateTime(1999, 6, 1));
 
             Assert.AreEqual(1400, Account.GetBalanceFromDate(new DateTime(1999, 1, 1)));
+        }
+
+        [TestMethod]
+        public void ShouldUpdate_PreviousBalances_When_StatementAdded()
+        {
+            Account.AddTransaction(new Expense(400), new DateTime(1999, 6, 1));
+            Assert.AreEqual(-400, Account.GetBalanceFromDate(new DateTime(1999, 6, 1)));
+            Assert.AreEqual(0, Account.GetBalanceFromDate(new DateTime(1999, 5, 1)));
+            Account.AddStatement(new Statement(1000), new DateTime(2000, 1, 1));
+            Assert.AreEqual(1000, Account.GetBalanceFromDate(new DateTime(1999, 6, 1)));
+            Assert.AreEqual(1400, Account.GetBalanceFromDate(new DateTime(1999, 5, 1)));
         }
 
         [TestMethod]

@@ -13,7 +13,7 @@ namespace Sunsets.Transactions.Tests.Unit.DebtAccountTests
     {
         public static Calendar Calendar { get; } = new Calendar();
 
-        public DebtAccount Account { get; set; } = new DebtAccount("Test");
+        public LiabilityAccount Account { get; set; } = new LiabilityAccount("Test");
 
         public DateTime Date { get; } = new DateTime(2005, 5, 5);
 

@@ -5,9 +5,9 @@
     {
         public AccountManagerTester()
         {
-            Savings = new Account("Savings", AccountType.Liquid);
-            Checking = new Account("Checking", AccountType.Liquid);
-            Credit = new DebtAccount("Credit");
+            Savings = new Account("Savings", AccountType.Asset);
+            Checking = new Account("Checking", AccountType.Asset);
+            Credit = new LiabilityAccount("Credit");
 
             Manager.Accounts.Add(Savings);
             Manager.Accounts.Add(Checking);

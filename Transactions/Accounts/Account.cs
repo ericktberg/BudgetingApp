@@ -39,6 +39,7 @@ namespace Sunsets.Transactions
         [JsonProperty]
         public AccountType Type { get; set; }
 
+        [System.Obsolete]
         public void AddRecurringTransaction(IRecurringTransaction transaction)
         {
             Calendar.AddRecurringTransaction(transaction);
@@ -56,7 +57,40 @@ namespace Sunsets.Transactions
         
         public decimal GetBalanceFromDate(DateTime date)
         {
-            return GetDelta(Calendar.GetDayForDate(date).EndingBalance);
+            FinancialDay closestDay = null;
+            TimeSpan? closestDistance = null;
+
+            // Find the closest day
+            foreach (var day in Calendar.Days)
+            {
+                TimeSpan distanceToDate;
+                // There is no "absolute value" function for TimeSpan, so we should handle negative numbers by avoiding them.
+                if (day.Date > date)
+                {
+                    distanceToDate = day.Date - date;
+                }
+                else
+                {
+                    distanceToDate = date - day.Date;
+                }
+
+                if (!closestDistance.HasValue || distanceToDate < closestDistance.Value)
+                {
+                    closestDay = day;
+                    closestDistance = distanceToDate;
+                }
+            }
+
+            if (closestDay == null) return 0;
+
+            if (closestDay.Date > date)
+            {
+                return GetDelta(closestDay.StartingBalance);
+            }
+            else
+            {
+                return GetDelta(closestDay.EndingBalance);
+            }
         }
 
         public virtual decimal GetDelta(decimal amount)

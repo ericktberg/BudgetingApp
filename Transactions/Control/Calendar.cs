@@ -14,6 +14,7 @@ namespace Sunsets.Transactions
 
         public IEnumerable<IRecurringTransaction> RecurringTransactions => RecurringTransactionsList;
 
+        [System.Obsolete]
         public void AddRecurringTransaction(IRecurringTransaction transaction)
         {
             /* TODO:

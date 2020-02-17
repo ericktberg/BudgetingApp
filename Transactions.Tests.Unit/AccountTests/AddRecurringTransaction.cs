@@ -9,7 +9,7 @@ namespace Sunsets.Transactions.Tests.Unit.AccountTests
     {
         public AccountTester()
         {
-            Account = new Account("TestAccount", AccountType.Liquid);
+            Account = new Account("TestAccount", AccountType.Asset);
         }
         
         public Account Account { get; }

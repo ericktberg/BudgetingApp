@@ -20,8 +20,8 @@ namespace Sunsets.Application.ViewModel
 
             Accounts = new ObservableCollection<AccountViewModel>();
 
-            AddAccount(new Account("Pizza", AccountType.Liquid));
-            AddAccount(new Account("Unicorns", AccountType.Debt));
+            AddAccount(new Account("Pizza", AccountType.Asset));
+            AddAccount(new Account("Unicorns", AccountType.Liability));
             AddAccount(new Account("Robot", AccountType.Property));
             AddAccount(new Account("MasterChief", AccountType.Invested));
 
@@ -64,7 +64,7 @@ namespace Sunsets.Application.ViewModel
             }
         }
 
-        public decimal NetBalance => SelectedAccounts.Sum(a => AccountManager.GetBalanceFromDate(a.Account, DateTime.Now) * (a.Type == AccountType.Debt ? -1 : 1));
+        public decimal NetBalance => SelectedAccounts.Sum(a => AccountManager.GetBalanceFromDate(a.Account, DateTime.Now) * (a.Type == AccountType.Liability ? -1 : 1));
 
         public ICommand RemoveCommand { get; }
 
@@ -95,12 +95,12 @@ namespace Sunsets.Application.ViewModel
 
         public void SelectAssets()
         {
-            SelectType(new List<AccountType> { AccountType.Liquid, AccountType.Invested, AccountType.Property });
+            SelectType(new List<AccountType> { AccountType.Asset, AccountType.Invested, AccountType.Property });
         }
 
         public void SelectDebt()
         {
-            SelectType(AccountType.Debt);
+            SelectType(AccountType.Liability);
         }
 
         public void SelectInvested()
@@ -110,12 +110,12 @@ namespace Sunsets.Application.ViewModel
 
         public void SelectLiabilities()
         {
-            SelectType(AccountType.Debt);
+            SelectType(AccountType.Liability);
         }
 
         public void SelectLiquid()
         {
-            SelectType(AccountType.Liquid);
+            SelectType(AccountType.Asset);
         }
 
         public void SelectNetWorth()
@@ -157,11 +157,11 @@ namespace Sunsets.Application.ViewModel
 
         #region Account Lists
 
-        public IEnumerable<AccountViewModel> Debt => Accounts.Where(a => a.Type.Equals(AccountType.Debt));
+        public IEnumerable<AccountViewModel> Debt => Accounts.Where(a => a.Type.Equals(AccountType.Liability));
 
         public IEnumerable<AccountViewModel> Invested => Accounts.Where(a => a.Type.Equals(AccountType.Invested));
 
-        public IEnumerable<AccountViewModel> Liquid => Accounts.Where(a => a.Type.Equals(AccountType.Liquid));
+        public IEnumerable<AccountViewModel> Liquid => Accounts.Where(a => a.Type.Equals(AccountType.Asset));
 
         public IEnumerable<AccountViewModel> Property => Accounts.Where(a => a.Type.Equals(AccountType.Property));
 
