@@ -70,7 +70,7 @@ namespace Sunsets.Application.ViewModel
 
         public void AddAccount(Account account)
         {
-            AccountManager.Accounts.Add(account);
+            AccountManager.AddAccount(account);
             Accounts.Add(new AccountViewModel(account));
             ReloadAccountLists();
         }
@@ -82,7 +82,7 @@ namespace Sunsets.Application.ViewModel
 
         public void RemoveAccount(AccountViewModel account)
         {
-            AccountManager.Accounts.Remove(account.Account);
+            AccountManager.RemoveAccount(account.Account);
             Accounts.Remove(account);
             ReloadAccountLists();
         }

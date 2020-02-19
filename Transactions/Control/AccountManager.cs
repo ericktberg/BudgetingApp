@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace Sunsets.Transactions
 {
@@ -18,10 +19,31 @@ namespace Sunsets.Transactions
 
         private AccountManager(IList<Account> accounts)
         {
-            Accounts = accounts;
+            BackingAccounts = accounts;
         }
 
-        public IList<Account> Accounts { get; private set; }
+        public IList<Account> BackingAccounts { get; }
+
+        [JsonIgnore]
+        public IEnumerable<Account> Accounts => BackingAccounts;
+
+        public Account GetAccount(string accountName)
+        {
+            return Accounts.First(a => a.Name == accountName);
+        }
+
+        public bool AddAccount(Account account)
+        {
+            if (BackingAccounts.Any(a => a.Name == account.Name)) throw new InvalidOperationException("Same account name");
+
+            BackingAccounts.Add(account);
+            return true;
+        }
+
+        public bool RemoveAccount(Account account)
+        {
+            return BackingAccounts.Remove(account);
+        }
 
         public decimal GetBalanceFromDate(Account account, DateTime date)
         {

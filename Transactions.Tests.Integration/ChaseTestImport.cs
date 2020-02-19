@@ -23,7 +23,7 @@ namespace Sunsets.Transactions.Tests.Integration
             account.AddStatement(new Statement(new decimal(-3638.41), AddWhen.StartOfDay), DateTime.Today);
 
             AccountManager manager = new AccountManager();
-            manager.Accounts.Add(account);
+            manager.AddAccount(account);
 
             using (var s = File.OpenWrite(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TestJson.json")))
             {

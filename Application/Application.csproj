@@ -90,8 +90,6 @@
     <Compile Include="Model\ListUtils.cs" />
     <Compile Include="MVVM\SwitchConverter.cs" />
     <Compile Include="MVVM\SwitchConverterCase.cs" />
-    <Compile Include="MVVM\RelayCommand.cs" />
-    <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -149,6 +147,10 @@
     <ProjectReference Include="..\Icons\Icons.csproj">
       <Project>{2a6372ac-992a-4ac8-af12-8303e71013a9}</Project>
       <Name>Icons</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVVM\MVVM.csproj">
+      <Project>{96c4c1f9-54f2-4375-a349-9bcf10df56b1}</Project>
+      <Name>MVVM</Name>
     </ProjectReference>
     <ProjectReference Include="..\Transactions\Transactions.csproj">
       <Project>{120DD9D2-8326-416F-AA31-FBA02D747AAA}</Project>

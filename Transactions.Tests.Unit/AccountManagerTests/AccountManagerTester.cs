@@ -9,9 +9,9 @@
             Checking = new Account("Checking", AccountType.Asset);
             Credit = new LiabilityAccount("Credit");
 
-            Manager.Accounts.Add(Savings);
-            Manager.Accounts.Add(Checking);
-            Manager.Accounts.Add(Credit);
+            Manager.AddAccount(Savings);
+            Manager.AddAccount(Checking);
+            Manager.AddAccount(Credit);
         }
 
         public AccountManager Manager { get; } = new AccountManager();

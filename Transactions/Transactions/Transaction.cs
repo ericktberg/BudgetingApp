@@ -29,7 +29,7 @@ namespace Sunsets.Transactions
         public decimal Amount { get; set; }
 
         [JsonProperty]
-        public Guid TransactionGuid { get; }
+        public Guid TransactionGuid { get; set; }
 
         public virtual decimal Value => Amount;
 

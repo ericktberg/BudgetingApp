@@ -83,6 +83,8 @@ namespace Sunsets.Transactions
 
             if (closestDay == null) return 0;
 
+            // If the day we found is after the date we wanted, we should extrapolate backwards using the starting balance. 
+            // If the day we found is either exactly date we wanted or after it, we should use the ending balance as standard or to extrapolate forwards. 
             if (closestDay.Date > date)
             {
                 return GetDelta(closestDay.StartingBalance);
